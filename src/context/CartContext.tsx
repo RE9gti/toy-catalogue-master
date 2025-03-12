@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem, Cart } from '@/types';
 import { useToast } from '@/hooks/use-toast';
@@ -11,6 +10,7 @@ interface CartContextType {
   clearCart: () => void;
   total: number;
   itemCount: number;
+  addToCart: (product: Product, quantity: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -19,7 +19,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<Cart>({ items: [], total: 0 });
   const { toast } = useToast();
 
-  // Carregar carrinho do localStorage na inicialização
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -27,17 +26,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  // Salvar carrinho no localStorage quando mudar
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-  // Calcular o total do carrinho
   const calculateTotal = (items: CartItem[]): number => {
     return items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   };
 
-  // Adicionar item ao carrinho
   const addItem = (product: Product, quantity: number) => {
     setCart(prevCart => {
       const existingItemIndex = prevCart.items.findIndex(item => item.product.id === product.id);
@@ -45,7 +41,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       let newItems = [...prevCart.items];
       
       if (existingItemIndex >= 0) {
-        // Se o produto já estiver no carrinho, atualize a quantidade
         newItems[existingItemIndex] = {
           ...newItems[existingItemIndex],
           quantity: newItems[existingItemIndex].quantity + quantity
@@ -55,7 +50,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           description: `${product.name} agora tem ${newItems[existingItemIndex].quantity} unidades`,
         });
       } else {
-        // Se o produto não estiver no carrinho, adicione-o
         newItems = [...newItems, { product, quantity }];
         toast({
           title: "Produto adicionado",
@@ -70,7 +64,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
-  // Remover item do carrinho
   const removeItem = (productId: string) => {
     setCart(prevCart => {
       const itemToRemove = prevCart.items.find(item => item.product.id === productId);
@@ -90,7 +83,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
-  // Atualizar quantidade de um item
   const updateQuantity = (productId: string, quantity: number) => {
     if (quantity <= 0) {
       removeItem(productId);
@@ -111,13 +103,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
-  // Limpar o carrinho
   const clearCart = () => {
     setCart({ items: [], total: 0 });
     toast({
       title: "Carrinho limpo",
       description: "Todos os itens foram removidos do carrinho",
     });
+  };
+
+  const addToCart = (product: Product, quantity: number) => {
+    addItem(product, quantity);
   };
 
   return (
@@ -128,7 +123,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       updateQuantity,
       clearCart,
       total: cart.total,
-      itemCount: cart.items.reduce((sum, item) => sum + item.quantity, 0)
+      itemCount: cart.items.reduce((sum, item) => sum + item.quantity, 0),
+      addToCart
     }}>
       {children}
     </CartContext.Provider>

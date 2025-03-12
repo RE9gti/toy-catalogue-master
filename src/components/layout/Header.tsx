@@ -9,13 +9,13 @@ import {
   Heart,
   LogOut
 } from 'lucide-react';
-import { 
-  Button,
+import { Button } from '@/components/ui/button';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/button';
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 

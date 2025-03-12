@@ -7,6 +7,7 @@ export type Category = {
   slug: string;
   description: string;
   image: string;
+  imageUrl: string; // Adicionando imageUrl como alternativa
 };
 
 export type Product = {
@@ -16,9 +17,11 @@ export type Product = {
   price: number;
   categoryId: string;
   image: string;
+  imageUrl: string; // Adicionando imageUrl como alternativa
   stock: number;
   sku: string;
   manufacturer: string;
+  supplier: string; // Adicionando supplier
   dimensions: {
     height: number;
     width: number;
