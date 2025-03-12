@@ -7,21 +7,24 @@ export const categories: Category[] = [
     name: 'Brinquedos Educativos',
     slug: 'brinquedos-educativos',
     description: 'Brinquedos que estimulam o aprendizado',
-    image: '/images/categories/educativos.jpg'
+    image: '/images/categories/educativos.jpg',
+    imageUrl: '/images/categories/educativos.jpg'
   },
   {
     id: "2",
     name: 'Jogos de Tabuleiro',
     slug: 'jogos-de-tabuleiro',
     description: 'Jogos para toda a família',
-    image: '/images/categories/tabuleiro.jpg'
+    image: '/images/categories/tabuleiro.jpg',
+    imageUrl: '/images/categories/tabuleiro.jpg'
   },
   {
     id: "3",
     name: 'Bonecas e Bonecos',
     slug: 'bonecas-e-bonecos',
     description: 'Diversos personagens e estilos',
-    image: '/images/categories/bonecas.jpg'
+    image: '/images/categories/bonecas.jpg',
+    imageUrl: '/images/categories/bonecas.jpg'
   }
 ];
 
@@ -33,9 +36,11 @@ export const products: Product[] = [
     price: 129.90,
     categoryId: "1",
     image: '/images/products/blocos.jpg',
+    imageUrl: '/images/products/blocos.jpg',
     stock: 50,
     sku: 'BLO-001',
     manufacturer: 'ToyEdu',
+    supplier: 'Fornecedor ABC',
     dimensions: {
       height: 30,
       width: 40,
@@ -60,9 +65,11 @@ export const products: Product[] = [
     price: 45.90,
     categoryId: "2",
     image: '/images/products/memoria.jpg',
+    imageUrl: '/images/products/memoria.jpg',
     stock: 30,
     sku: 'JOG-001',
     manufacturer: 'GameKids',
+    supplier: 'Fornecedor XYZ',
     dimensions: {
       height: 20,
       width: 15,
@@ -87,9 +94,11 @@ export const products: Product[] = [
     price: 89.90,
     categoryId: "3",
     image: '/images/products/boneca.jpg',
+    imageUrl: '/images/products/boneca.jpg',
     stock: 25,
     sku: 'BON-001',
     manufacturer: 'DollMaker',
+    supplier: 'Fornecedor QWE',
     dimensions: {
       height: 35,
       width: 15,

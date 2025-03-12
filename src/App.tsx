@@ -8,6 +8,8 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Index from './pages/Index';
 import NotFound from './pages/NotFound';
+import AdminDashboard from './pages/Admin/Dashboard';
+import CartPage from './pages/Cart';
 
 // Criando cliente de query
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ function App() {
               <main className="flex-grow">
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/carrinho" element={<CartPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
