@@ -1,21 +1,31 @@
 
-export interface Product {
+// Definição dos tipos para o catálogo de brinquedos
+
+export type Category = {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+};
+
+export type Product = {
   id: string;
   name: string;
   description: string;
   price: number;
-  imageUrl: string;
   categoryId: string;
-  subcategoryId?: string;
+  image: string;
   stock: number;
-  supplier: string;
+  sku: string;
+  manufacturer: string;
   dimensions: {
     height: number;
     width: number;
     depth: number;
   };
   recommendedAge: string;
-  recommendedGender: 'Unisex' | 'Boys' | 'Girls';
+  recommendedGender: "Unisex" | "Boys" | "Girls";
   material: string;
   safety: {
     certifications: string[];
@@ -23,84 +33,65 @@ export interface Product {
   };
   tags: string[];
   barcode: string;
-  sku: string;
   weight: number;
-  status: 'active' | 'inactive';
-  createdAt: string;
-  updatedAt: string;
-}
+  status: "active" | "inactive";
+};
 
-export interface Category {
+export type OrderItem = {
+  productId: string;
+  quantity: number;
+  price: number;
+};
+
+export type ShippingAddress = {
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+};
+
+export type Order = {
   id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
+  customerId: string;
+  products: OrderItem[];
+  status: "processing" | "shipped" | "delivered" | "canceled" | "returned" | "refunded";
+  totalAmount: number;
   createdAt: string;
   updatedAt: string;
-}
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
+};
 
-export interface Subcategory {
-  id: string;
-  name: string;
-  description: string;
-  categoryId: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface User {
+export type Customer = {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'customer';
-  address?: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-  };
-  phone?: string;
-  birthdate?: string;
-  preferences?: string[];
+  password: string;
+  phone: string;
+  birthDate: string;
+  addresses: ShippingAddress[];
+  preferences: string[];
   createdAt: string;
   updatedAt: string;
-}
+  status: "active" | "inactive";
+};
 
-export interface CartItem {
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: "admin" | "customer";
+  status: "active" | "inactive";
+};
+
+export type CartItem = {
   product: Product;
   quantity: number;
-}
+};
 
-export interface Order {
-  id: string;
-  userId: string;
-  items: {
-    productId: string;
-    quantity: number;
-    price: number;
-  }[];
-  totalAmount: number;
-  status: 'processing' | 'shipped' | 'delivered' | 'canceled' | 'returned' | 'refunded';
-  shippingAddress: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-  };
-  paymentMethod: 'credit_card' | 'pix' | 'bank_slip' | 'cash_on_delivery';
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Review {
-  id: string;
-  productId: string;
-  userId: string;
-  rating: number;
-  comment: string;
-  adminResponse?: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export type Cart = {
+  items: CartItem[];
+  total: number;
+};
