@@ -10,6 +10,9 @@ import Index from './pages/Index';
 import NotFound from './pages/NotFound';
 import AdminDashboard from './pages/Admin/Dashboard';
 import CartPage from './pages/Cart';
+import CatalogPage from './pages/Catalog';
+import ContactPage from './pages/Contact';
+import LoginPage from './pages/Login';
 
 // Criando cliente de query
 const queryClient = new QueryClient();
@@ -27,6 +30,9 @@ function App() {
                   <Route path="/" element={<Index />} />
                   <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="/carrinho" element={<CartPage />} />
+                  <Route path="/catalogo" element={<CatalogPage />} />
+                  <Route path="/contato" element={<ContactPage />} />
+                  <Route path="/login" element={<LoginPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
