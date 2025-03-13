@@ -13,6 +13,9 @@ import CartPage from './pages/Cart';
 import CatalogPage from './pages/Catalog';
 import ContactPage from './pages/Contact';
 import LoginPage from './pages/Login';
+import AddProductPage from './pages/Admin/AddProduct';
+import EditProductPage from './pages/Admin/EditProduct';
+import ProductsListPage from './pages/Admin/ProductsList';
 import { useAuth } from './context/AuthContext';
 
 // Criando cliente de query
@@ -43,6 +46,21 @@ function AppRoutes() {
           <Route path="/admin" element={
             <ProtectedAdminRoute>
               <AdminDashboard />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/produtos/novo" element={
+            <ProtectedAdminRoute>
+              <AddProductPage />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/produtos" element={
+            <ProtectedAdminRoute>
+              <ProductsListPage />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/produtos/editar/:id" element={
+            <ProtectedAdminRoute>
+              <EditProductPage />
             </ProtectedAdminRoute>
           } />
           <Route path="/carrinho" element={<CartPage />} />

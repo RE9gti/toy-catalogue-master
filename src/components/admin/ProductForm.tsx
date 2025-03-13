@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Product } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -23,6 +22,7 @@ import {
 } from '@/components/ui/card';
 import { categories } from '@/data/mockData';
 import { toast } from '@/components/ui/use-toast';
+import ImageUpload from './ImageUpload';
 
 interface ProductFormProps {
   product?: Product;
@@ -206,15 +206,15 @@ const ProductForm: React.FC<ProductFormProps> = ({
       {/* Basic Information */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Information</CardTitle>
+          <CardTitle>Informações Básicas</CardTitle>
           <CardDescription>
-            Enter the product's basic details.
+            Insira os detalhes básicos do produto.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="name">Product Name *</Label>
+              <Label htmlFor="name">Nome do Produto *</Label>
               <Input
                 id="name"
                 name="name"
@@ -235,7 +235,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description *</Label>
+            <Label htmlFor="description">Descrição *</Label>
             <Textarea
               id="description"
               name="description"
@@ -247,7 +247,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="price">Price *</Label>
+              <Label htmlFor="price">Preço *</Label>
               <Input
                 id="price"
                 name="price"
@@ -260,7 +260,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="stock">Stock *</Label>
+              <Label htmlFor="stock">Estoque *</Label>
               <Input
                 id="stock"
                 name="stock"
@@ -274,13 +274,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="categoryId">Category *</Label>
+              <Label htmlFor="categoryId">Categoria *</Label>
               <Select
                 value={formData.categoryId}
                 onValueChange={(value) => handleSelectChange('categoryId', value)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder="Selecione a categoria" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
@@ -292,7 +292,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="supplier">Supplier *</Label>
+              <Label htmlFor="supplier">Fornecedor *</Label>
               <Input
                 id="supplier"
                 name="supplier"
@@ -303,13 +303,16 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="imageUrl">Image URL *</Label>
-            <Input
-              id="imageUrl"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              required
+            <ImageUpload 
+              imageUrl={formData.imageUrl || ''} 
+              onChange={(url) => {
+                setFormData(prev => ({
+                  ...prev,
+                  imageUrl: url,
+                  image: url,
+                }));
+              }}
+              label="Imagem do Produto *"
             />
           </div>
           <div className="flex items-center space-x-2">
@@ -318,7 +321,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               checked={formData.status === 'active'}
               onCheckedChange={handleStatusChange}
             />
-            <Label htmlFor="status">Product is active</Label>
+            <Label htmlFor="status">Produto está ativo</Label>
           </div>
         </CardContent>
       </Card>
@@ -326,15 +329,15 @@ const ProductForm: React.FC<ProductFormProps> = ({
       {/* Product Details */}
       <Card>
         <CardHeader>
-          <CardTitle>Product Details</CardTitle>
+          <CardTitle>Detalhes do Produto</CardTitle>
           <CardDescription>
-            Additional information about the product.
+            Adicione detalhes adicionais sobre o produto.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="height">Height (cm)</Label>
+              <Label htmlFor="height">Altura (cm)</Label>
               <Input
                 id="height"
                 name="height"
@@ -346,7 +349,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="width">Width (cm)</Label>
+              <Label htmlFor="width">Largura (cm)</Label>
               <Input
                 id="width"
                 name="width"
@@ -358,7 +361,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="depth">Depth (cm)</Label>
+              <Label htmlFor="depth">Profundidade (cm)</Label>
               <Input
                 id="depth"
                 name="depth"
@@ -372,7 +375,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="weight">Weight (kg)</Label>
+              <Label htmlFor="weight">Peso (kg)</Label>
               <Input
                 id="weight"
                 name="weight"
@@ -384,7 +387,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="barcode">Barcode</Label>
+              <Label htmlFor="barcode">Código de Barras</Label>
               <Input
                 id="barcode"
                 name="barcode"
@@ -404,17 +407,17 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="recommendedAge">Recommended Age</Label>
+              <Label htmlFor="recommendedAge">Idade Recomendada</Label>
               <Input
                 id="recommendedAge"
                 name="recommendedAge"
                 value={formData.recommendedAge}
                 onChange={handleChange}
-                placeholder="e.g. 3-5 years"
+                placeholder="e.g. 3-5 anos"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="recommendedGender">Recommended Gender</Label>
+              <Label htmlFor="recommendedGender">Gênero Recomendado</Label>
               <Select
                 value={formData.recommendedGender}
                 onValueChange={(value) => 
@@ -422,7 +425,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select gender" />
+                  <SelectValue placeholder="Selecione o gênero" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Unisex">Unisex</SelectItem>
@@ -438,9 +441,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
       {/* Tags and Safety */}
       <Card>
         <CardHeader>
-          <CardTitle>Tags and Safety</CardTitle>
+          <CardTitle>Tags e Segurança</CardTitle>
           <CardDescription>
-            Add tags and safety information for the product.
+            Adicione tags e informações de segurança para o produto.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -468,21 +471,21 @@ const ProductForm: React.FC<ProductFormProps> = ({
               <Input
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
-                placeholder="Add a tag"
+                placeholder="Adicione uma tag"
               />
               <Button 
                 type="button" 
                 variant="secondary"
                 onClick={handleAddTag}
               >
-                Add
+                Adicionar
               </Button>
             </div>
           </div>
 
           {/* Certifications */}
           <div className="space-y-4">
-            <Label>Safety Certifications</Label>
+            <Label>Segurança Certificações</Label>
             <div className="flex flex-wrap gap-2">
               {formData.safety?.certifications.map((cert) => (
                 <div 
@@ -504,21 +507,21 @@ const ProductForm: React.FC<ProductFormProps> = ({
               <Input
                 value={certificationInput}
                 onChange={(e) => setCertificationInput(e.target.value)}
-                placeholder="Add a certification"
+                placeholder="Adicione uma certificação"
               />
               <Button 
                 type="button" 
                 variant="secondary"
                 onClick={handleAddCertification}
               >
-                Add
+                Adicionar
               </Button>
             </div>
           </div>
 
           {/* Warnings */}
           <div className="space-y-4">
-            <Label>Safety Warnings</Label>
+            <Label>Segurança Avisos</Label>
             <div className="flex flex-wrap gap-2">
               {formData.safety?.warnings.map((warning) => (
                 <div 
@@ -540,24 +543,24 @@ const ProductForm: React.FC<ProductFormProps> = ({
               <Input
                 value={warningInput}
                 onChange={(e) => setWarningInput(e.target.value)}
-                placeholder="Add a warning"
+                placeholder="Adicione um aviso"
               />
               <Button 
                 type="button" 
                 variant="secondary"
                 onClick={handleAddWarning}
               >
-                Add
+                Adicionar
               </Button>
             </div>
           </div>
         </CardContent>
         <CardFooter className="flex justify-end space-x-4">
           <Button variant="outline" type="button">
-            Cancel
+            Cancelar
           </Button>
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? 'Saving...' : product ? 'Update Product' : 'Create Product'}
+            {isLoading ? 'Salvando...' : product ? 'Atualizar Produto' : 'Criar Produto'}
           </Button>
         </CardFooter>
       </Card>

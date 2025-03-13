@@ -139,9 +139,14 @@ const AdminDashboard = () => {
               <CardDescription>Gerencie todos os produtos do catálogo</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">
-                Aqui você verá a listagem de produtos quando implementada.
-              </p>
+              <div className="flex justify-between mb-4">
+                <p className="text-muted-foreground">
+                  Veja a lista completa de produtos e gerencie o catálogo da loja.
+                </p>
+                <Button variant="outline" onClick={() => navigate('/admin/produtos')}>
+                  Ver todos os produtos
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
