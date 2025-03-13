@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import { Eye, EyeOff, User, KeyRound, LogIn } from 'lucide-react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isAuthenticated, isAdmin } = useAuth();
   const { toast } = useToast();
   
   const [formData, setFormData] = useState({
@@ -19,6 +19,18 @@ const LoginPage = () => {
   
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Verificar se o usuário já está autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Redirecionar para área de admin se for admin, senão para home
+      if (isAdmin) {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+    }
+  }, [isAuthenticated, isAdmin, navigate]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,7 +50,8 @@ const LoginPage = () => {
           title: "Login realizado com sucesso",
           description: "Bem-vindo de volta à nossa loja!",
         });
-        navigate('/');
+        
+        // O redirecionamento será feito pelo useEffect acima
       } else {
         toast({
           title: "Falha no login",
@@ -52,8 +65,8 @@ const LoginPage = () => {
   };
   
   const adminCredentials = {
-    email: 'admin@exemplo.com',
-    password: 'senha123'
+    email: 'admin@brinquedos.com',
+    password: 'admin123'
   };
   
   const customerCredentials = {

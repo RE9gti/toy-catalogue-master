@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -9,22 +8,12 @@ import { useAuth } from '@/context/AuthContext';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { customers, orders } from '@/data/mockData';
-import { useState } from 'react';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const { isAdmin } = useAuth();
   const [customerFilter, setCustomerFilter] = useState('');
   const [orderFilter, setOrderFilter] = useState('');
-
-  // Redirecionar se não for administrador
-  React.useEffect(() => {
-    if (!isAdmin) {
-      navigate('/');
-    }
-  }, [isAdmin, navigate]);
 
   // Filtragem de clientes
   const filteredCustomers = customers.filter(customer => 

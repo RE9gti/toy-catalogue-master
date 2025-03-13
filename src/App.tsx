@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -13,9 +13,49 @@ import CartPage from './pages/Cart';
 import CatalogPage from './pages/Catalog';
 import ContactPage from './pages/Contact';
 import LoginPage from './pages/Login';
+import { useAuth } from './context/AuthContext';
 
 // Criando cliente de query
 const queryClient = new QueryClient();
+
+// Componente para rotas protegidas
+const ProtectedAdminRoute = ({ children }) => {
+  const { isAuthenticated, isAdmin } = useAuth();
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return children;
+};
+
+function AppRoutes() {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/admin" element={
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/carrinho" element={<CartPage />} />
+          <Route path="/catalogo" element={<CatalogPage />} />
+          <Route path="/contato" element={<ContactPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+}
 
 function App() {
   return (
@@ -23,21 +63,7 @@ function App() {
       <Router>
         <AuthProvider>
           <CartProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/admin" element={<AdminDashboard />} />
-                  <Route path="/carrinho" element={<CartPage />} />
-                  <Route path="/catalogo" element={<CatalogPage />} />
-                  <Route path="/contato" element={<ContactPage />} />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-              <Footer />
-            </div>
+            <AppRoutes />
             <Toaster />
           </CartProvider>
         </AuthProvider>

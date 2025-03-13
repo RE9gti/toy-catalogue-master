@@ -32,6 +32,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (foundUser) {
       setUser(foundUser);
       localStorage.setItem('user', JSON.stringify(foundUser));
+      
+      // Redirecionar baseado no tipo de usuário
+      setTimeout(() => {
+        if (foundUser.role === 'admin') {
+          console.log("Redirecionando para área de admin");
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
+      }, 100);
+      
       return true;
     }
     
@@ -41,7 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
-    navigate('/');
+    navigate('/login');
   };
 
   const isAuthenticated = !!user;
