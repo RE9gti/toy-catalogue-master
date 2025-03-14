@@ -13,13 +13,24 @@ const addProduct = async (product: Partial<Product>): Promise<Product> => {
   try {
     console.log("Enviando produto para API:", product);
     
+    // Garantir que os campos de imagem são processados corretamente
+    const productData = {
+      ...product,
+      // Garantir que exista uma URL de imagem válida 
+      imageUrl: product.imageUrl || '',
+      // Se estiver usando data URL para a imagem, você pode gerenciar isso aqui
+      createdAt: new Date().toISOString()
+    };
+    
     // Simulação da API - Em produção, isto conectaria ao MySQL
     // Com as credenciais: usuário: re9, senha: rg51gti66
     const mockResponse = {
-      ...product,
-      id: `prod-${Date.now()}`,
-      createdAt: new Date().toISOString()
+      ...productData,
+      id: `prod-${Date.now()}`
     };
+    
+    // Simulamos um pequeno atraso para simular uma chamada de rede
+    await new Promise(resolve => setTimeout(resolve, 800));
     
     // Simular resposta bem-sucedida (remover em produção)
     return mockResponse as Product;
@@ -30,10 +41,7 @@ const addProduct = async (product: Partial<Product>): Promise<Product> => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        ...product,
-        createdAt: new Date().toISOString()
-      }),
+      body: JSON.stringify(productData),
     });
 
     if (!response.ok) {
@@ -67,19 +75,21 @@ const AddProductPage: React.FC = () => {
         description: `Ocorreu um erro: ${error.message}`,
         variant: 'destructive',
       });
+      setIsSubmitting(false);
     },
   });
 
   const handleSubmit = (productData: Partial<Product>) => {
     setIsSubmitting(true);
     
-    // Garantir que a imageUrl está definida
-    const finalData = {
-      ...productData,
-      imageUrl: productData.imageUrl || ''
-    };
+    // Verificar se temos uma imagem válida
+    if (!productData.imageUrl) {
+      console.log("Produto enviado sem imagem");
+    } else {
+      console.log("Produto enviado com imagem:", productData.imageUrl.substring(0, 50) + "...");
+    }
     
-    mutation.mutate(finalData);
+    mutation.mutate(productData);
   };
 
   return (
