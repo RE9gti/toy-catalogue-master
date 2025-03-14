@@ -11,6 +11,9 @@ import NotFound from './pages/NotFound';
 import AdminDashboard from './pages/Admin/Dashboard';
 import CartPage from './pages/Cart';
 import CatalogPage from './pages/Catalog';
+import CategoriesPage from './pages/Categories';
+import NewReleasesPage from './pages/NewReleases';
+import PromotionsPage from './pages/Promotions';
 import ContactPage from './pages/Contact';
 import LoginPage from './pages/Login';
 import AddProductPage from './pages/Admin/AddProduct';
@@ -65,6 +68,9 @@ function AppRoutes() {
           } />
           <Route path="/carrinho" element={<CartPage />} />
           <Route path="/catalogo" element={<CatalogPage />} />
+          <Route path="/categorias" element={<CategoriesPage />} />
+          <Route path="/lancamentos" element={<NewReleasesPage />} />
+          <Route path="/promocoes" element={<PromotionsPage />} />
           <Route path="/contato" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
