@@ -14,6 +14,45 @@ const fetchProduct = async (id: string): Promise<Product | null> => {
   try {
     // Em um ambiente real, esta seria uma chamada para um endpoint de API
     // que se conectaria ao MySQL usando as credenciais fornecidas
+    
+    // Simulamos uma resposta para desenvolvimento
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Para fins de teste, retorne um produto simulado
+    const mockProduct: Product = {
+      id: id,
+      name: "Produto de Teste",
+      description: "Descrição do produto de teste",
+      price: 99.99,
+      categoryId: "cat-1",
+      image: "",
+      imageUrl: "https://via.placeholder.com/300",
+      stock: 10,
+      sku: "SKU-TEST-123",
+      manufacturer: "Fabricante Teste",
+      supplier: "Fornecedor Teste",
+      dimensions: {
+        height: 10,
+        width: 20,
+        depth: 5
+      },
+      recommendedAge: "3-5 anos",
+      recommendedGender: "Unisex",
+      material: "Plástico",
+      safety: {
+        certifications: ["CE", "INMETRO"],
+        warnings: ["Peças pequenas"]
+      },
+      tags: ["educativo", "divertido"],
+      barcode: "789012345678",
+      weight: 0.5,
+      status: "active"
+    };
+    
+    console.log("Produto recuperado:", mockProduct);
+    return mockProduct;
+    
+    /* Código real para produção:
     const response = await fetch(`/api/produtos/${id}`);
     
     if (!response.ok) {
@@ -22,6 +61,7 @@ const fetchProduct = async (id: string): Promise<Product | null> => {
     
     const data = await response.json();
     return data;
+    */
   } catch (error) {
     console.error('Erro ao buscar produto:', error);
     return null;
@@ -31,6 +71,28 @@ const fetchProduct = async (id: string): Promise<Product | null> => {
 // Função para atualizar produto no banco de dados MySQL
 const updateProduct = async (product: Partial<Product>): Promise<Product> => {
   try {
+    console.log("Enviando atualização de produto:", product);
+    
+    // Garantir que os campos de imagem são processados corretamente
+    const productData = {
+      ...product,
+      imageUrl: product.imageUrl || '',
+      updatedAt: new Date().toISOString()
+    };
+    
+    // Simulação para desenvolvimento
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Simulamos uma resposta bem-sucedida
+    const mockResponse = {
+      ...productData,
+      updatedAt: new Date().toISOString()
+    };
+    
+    console.log("Produto atualizado:", mockResponse);
+    return mockResponse as Product;
+    
+    /* Código real para produção:
     const response = await fetch(`/api/produtos/${product.id}`, {
       method: 'PUT',
       headers: {
@@ -47,9 +109,8 @@ const updateProduct = async (product: Partial<Product>): Promise<Product> => {
     }
     
     const data = await response.json();
-    console.log('Produto atualizado:', data);
-    
     return data as Product;
+    */
   } catch (error) {
     console.error('Erro ao atualizar produto:', error);
     throw error;
@@ -60,12 +121,16 @@ const EditProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [notFound, setNotFound] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id || ''),
-    onSettled: (data) => {
+    onSuccess: (data) => {
       if (!data) setNotFound(true);
+    },
+    onError: () => {
+      setNotFound(true);
     }
   });
   
@@ -84,10 +149,23 @@ const EditProductPage: React.FC = () => {
         description: `Ocorreu um erro: ${error.message}`,
         variant: 'destructive',
       });
+      setIsSubmitting(false);
     },
   });
 
   const handleSubmit = (productData: Partial<Product>) => {
+    setIsSubmitting(true);
+    
+    // Verificar se temos uma imagem válida
+    if (!productData.imageUrl) {
+      console.log("Produto enviado sem imagem");
+    } else {
+      console.log("Produto enviado com imagem:", 
+        productData.imageUrl.substring(0, 50) + 
+        (productData.imageUrl.length > 50 ? "..." : "")
+      );
+    }
+    
     if (product) {
       const updatedProduct = {
         ...product,
@@ -150,7 +228,7 @@ const EditProductPage: React.FC = () => {
       <ProductForm 
         product={product}
         onSubmit={handleSubmit}
-        isLoading={mutation.isPending}
+        isLoading={isSubmitting || mutation.isPending}
       />
     </div>
   );
