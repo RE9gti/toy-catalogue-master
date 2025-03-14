@@ -8,22 +8,35 @@ import ProductForm from '@/components/admin/ProductForm';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
-// Mock de função para simular a adição de um produto
+// Função para adicionar produto ao banco de dados MySQL
 const addProduct = async (product: Partial<Product>): Promise<Product> => {
-  // Simulação de delay de rede
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  // Criar um ID único
-  const newProduct = {
-    ...product,
-    id: `prod_${Date.now()}`,
-    image: product.imageUrl, // Garantir que image e imageUrl sejam iguais
-  } as Product;
-  
-  console.log('Produto adicionado:', newProduct);
-  
-  // Em um app real, aqui faríamos uma requisição para adicionar ao banco de dados
-  return newProduct;
+  try {
+    // Em um ambiente real, esta seria uma chamada para um endpoint de API
+    // que se conectaria ao MySQL usando as credenciais fornecidas
+    const response = await fetch('/api/produtos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...product,
+        // Incluir dados para MySQL
+        createdAt: new Date().toISOString()
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao adicionar produto ao banco de dados');
+    }
+
+    const data = await response.json();
+    console.log('Produto adicionado:', data);
+    
+    return data;
+  } catch (error) {
+    console.error('Erro ao adicionar produto:', error);
+    throw error;
+  }
 };
 
 const AddProductPage: React.FC = () => {

@@ -9,52 +9,51 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Mock para simular um produto sendo buscado
+// Função para buscar produto do banco de dados MySQL
 const fetchProduct = async (id: string): Promise<Product | null> => {
-  // Simulação de delay de rede
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  // Produto de exemplo
-  if (id === 'prod_1') {
-    return {
-      id: 'prod_1',
-      name: 'Quebra-cabeça Infantil',
-      description: 'Quebra-cabeça de 48 peças com temas infantis',
-      price: 29.90,
-      categoryId: 'cat_1',
-      image: '/placeholder.svg',
-      imageUrl: '/placeholder.svg',
-      stock: 25,
-      sku: 'QCI-001',
-      manufacturer: 'Brinquedos Educativos',
-      supplier: 'Fornecedor ABC',
-      dimensions: { height: 30, width: 20, depth: 5 },
-      recommendedAge: '3-5 anos',
-      recommendedGender: 'Unisex',
-      material: 'Papelão e papel',
-      safety: {
-        certifications: ['INMETRO', 'CE'],
-        warnings: ['Peças pequenas', 'Não recomendado para menores de 3 anos']
-      },
-      tags: ['Educativo', 'Quebra-cabeça', 'Infantil'],
-      barcode: '7890123456789',
-      weight: 0.3,
-      status: 'active'
-    };
+  try {
+    // Em um ambiente real, esta seria uma chamada para um endpoint de API
+    // que se conectaria ao MySQL usando as credenciais fornecidas
+    const response = await fetch(`/api/produtos/${id}`);
+    
+    if (!response.ok) {
+      throw new Error('Erro ao buscar produto');
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar produto:', error);
+    return null;
   }
-  
-  return null;
 };
 
-// Mock para simular a atualização de um produto
+// Função para atualizar produto no banco de dados MySQL
 const updateProduct = async (product: Partial<Product>): Promise<Product> => {
-  // Simulação de delay de rede
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  console.log('Produto atualizado:', product);
-  
-  // Em um app real, aqui faríamos uma requisição para atualizar no banco de dados
-  return product as Product;
+  try {
+    const response = await fetch(`/api/produtos/${product.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...product,
+        updatedAt: new Date().toISOString()
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao atualizar produto');
+    }
+    
+    const data = await response.json();
+    console.log('Produto atualizado:', data);
+    
+    return data as Product;
+  } catch (error) {
+    console.error('Erro ao atualizar produto:', error);
+    throw error;
+  }
 };
 
 const EditProductPage: React.FC = () => {
@@ -65,11 +64,8 @@ const EditProductPage: React.FC = () => {
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id || ''),
-    onSuccess: (data) => {
+    onSettled: (data) => {
       if (!data) setNotFound(true);
-    },
-    onError: () => {
-      setNotFound(true);
     }
   });
   
