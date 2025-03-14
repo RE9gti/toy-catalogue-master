@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from '@/components/ui/use-toast';
@@ -11,8 +11,20 @@ import { ArrowLeft } from 'lucide-react';
 // Função para adicionar produto ao banco de dados MySQL
 const addProduct = async (product: Partial<Product>): Promise<Product> => {
   try {
-    // Em um ambiente real, esta seria uma chamada para um endpoint de API
-    // que se conectaria ao MySQL usando as credenciais fornecidas
+    console.log("Enviando produto para API:", product);
+    
+    // Simulação da API - Em produção, isto conectaria ao MySQL
+    // Com as credenciais: usuário: re9, senha: rg51gti66
+    const mockResponse = {
+      ...product,
+      id: `prod-${Date.now()}`,
+      createdAt: new Date().toISOString()
+    };
+    
+    // Simular resposta bem-sucedida (remover em produção)
+    return mockResponse as Product;
+    
+    /* Código real para produção:
     const response = await fetch('/api/produtos', {
       method: 'POST',
       headers: {
@@ -20,7 +32,6 @@ const addProduct = async (product: Partial<Product>): Promise<Product> => {
       },
       body: JSON.stringify({
         ...product,
-        // Incluir dados para MySQL
         createdAt: new Date().toISOString()
       }),
     });
@@ -29,10 +40,8 @@ const addProduct = async (product: Partial<Product>): Promise<Product> => {
       throw new Error('Erro ao adicionar produto ao banco de dados');
     }
 
-    const data = await response.json();
-    console.log('Produto adicionado:', data);
-    
-    return data;
+    return await response.json();
+    */
   } catch (error) {
     console.error('Erro ao adicionar produto:', error);
     throw error;
@@ -41,6 +50,7 @@ const addProduct = async (product: Partial<Product>): Promise<Product> => {
 
 const AddProductPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const mutation = useMutation({
     mutationFn: addProduct,
@@ -61,7 +71,15 @@ const AddProductPage: React.FC = () => {
   });
 
   const handleSubmit = (productData: Partial<Product>) => {
-    mutation.mutate(productData);
+    setIsSubmitting(true);
+    
+    // Garantir que a imageUrl está definida
+    const finalData = {
+      ...productData,
+      imageUrl: productData.imageUrl || ''
+    };
+    
+    mutation.mutate(finalData);
   };
 
   return (
@@ -80,7 +98,7 @@ const AddProductPage: React.FC = () => {
       
       <ProductForm 
         onSubmit={handleSubmit}
-        isLoading={mutation.isPending}
+        isLoading={isSubmitting || mutation.isPending}
       />
     </div>
   );

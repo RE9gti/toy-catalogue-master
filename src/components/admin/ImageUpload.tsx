@@ -46,17 +46,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     // Criar URL temporária para preview
     const reader = new FileReader();
     reader.onload = () => {
-      setPreviewUrl(reader.result as string);
+      const result = reader.result as string;
+      setPreviewUrl(result);
+      
+      // Importante: atualizar o valor para o componente pai imediatamente
+      onChange(result);
     };
     reader.readAsDataURL(file);
     
     // Simulando um upload para servidor
     setTimeout(() => {
       setIsUploading(false);
-      
-      // Em um app real, aqui teríamos o URL retornado pelo servidor
-      const mockServerUrl = previewUrl;
-      onChange(mockServerUrl || '');
       
       toast({
         title: 'Imagem enviada',
