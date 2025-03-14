@@ -64,8 +64,19 @@ const EditProductPage: React.FC = () => {
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id || ''),
+    onSuccess: (data) => {
+      if (!data) setNotFound(true);
+    },
     onError: () => {
+      console.error('Erro ao buscar produto');
       setNotFound(true);
+    },
+    meta: { 
+      // Opção correta para a versão mais recente do @tanstack/react-query
+      // As informações de erro são tratadas no objeto meta
+      errorHandler: () => {
+        setNotFound(true);
+      }
     }
   });
   
