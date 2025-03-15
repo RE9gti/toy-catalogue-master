@@ -114,6 +114,9 @@ export type User = {
   password: string;
   role: UserRole;
   status: "active" | "inactive";
+  phone?: string;
+  address?: string;
+  createdAt?: string;
 };
 
 export type CartItem = {

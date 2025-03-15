@@ -25,8 +25,12 @@ import { useAuth } from './context/AuthContext';
 // Criando cliente de query
 const queryClient = new QueryClient();
 
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
+
 // Componente para rotas protegidas
-const ProtectedAdminRoute = ({ children }) => {
+const ProtectedAdminRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated, isAdmin } = useAuth();
   
   if (!isAuthenticated) {
@@ -37,18 +41,18 @@ const ProtectedAdminRoute = ({ children }) => {
     return <Navigate to="/" replace />;
   }
   
-  return children;
+  return <>{children}</>;
 };
 
 // Componente para rotas de cliente protegidas
-const ProtectedClientRoute = ({ children }) => {
+const ProtectedClientRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
   
-  return children;
+  return <>{children}</>;
 };
 
 function AppRoutes() {

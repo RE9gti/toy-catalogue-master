@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { products } from '@/data/mockData';
 import { Product } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import ProductCard from '@/components/ui/ProductCard';
-import { ChevronDown, Filter, Gift, Info, Search, ShoppingBag, Star, Calendar, Tag } from 'lucide-react';
+import { ChevronDown, Filter, Gift, Info, Search, ShoppingBag, Star, Calendar, Tag, X } from 'lucide-react';
 import {
   Tabs,
   TabsContent,
@@ -40,7 +39,6 @@ const NewReleasesPage = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   
-  // Simular tempo de carregamento
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -48,12 +46,9 @@ const NewReleasesPage = () => {
     return () => clearTimeout(timer);
   }, []);
   
-  // Ordenar produtos por data (simulado, assumindo que produtos recentes estão no início do array)
   const allNewReleases = [...products].slice(0, 16);
   
-  // Filtrar produtos com base nos critérios
   const filteredReleases = allNewReleases.filter(product => {
-    // Filtrar por pesquisa
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       const nameMatch = product.name.toLowerCase().includes(query);
@@ -63,17 +58,14 @@ const NewReleasesPage = () => {
       if (!nameMatch && !descMatch && !tagsMatch) return false;
     }
     
-    // Filtrar por categoria (se selecionada)
     if (activeCategory && product.categoryId !== activeCategory) {
       return false;
     }
     
-    // Filtrar por faixa de preço
     if (product.price < priceRange[0] || product.price > priceRange[1]) {
       return false;
     }
     
-    // Filtrar por tipo de lançamento
     if (filter === 'exclusive' && !product.tags.includes('exclusivo')) {
       return false;
     }
@@ -84,7 +76,6 @@ const NewReleasesPage = () => {
     return true;
   });
   
-  // Ordenar produtos
   const sortedReleases = [...filteredReleases].sort((a, b) => {
     switch (sortBy) {
       case 'price-asc':
@@ -96,19 +87,16 @@ const NewReleasesPage = () => {
       case 'name-desc':
         return b.name.localeCompare(a.name);
       default:
-        return 0; // Por data (padrão)
+        return 0;
     }
   });
   
-  // Produtos em destaque (simulado, pegando os primeiros 3)
   const featuredProducts = allNewReleases.slice(0, 3);
   
-  // Função para carregar mais produtos
   const loadMore = () => {
     setDisplayCount(prev => Math.min(prev + 8, filteredReleases.length));
   };
   
-  // Função para limpar filtros
   const clearFilters = () => {
     setFilter('all');
     setSearchQuery('');
@@ -118,7 +106,6 @@ const NewReleasesPage = () => {
     setFilterSheetOpen(false);
   };
 
-  // Calcular datas de lançamento para calendário (simulado)
   const currentDate = new Date();
   const upcomingReleases = [
     {
@@ -156,7 +143,6 @@ const NewReleasesPage = () => {
         </TabsList>
         
         <TabsContent value="products" className="space-y-8 animate-fade-in">
-          {/* Barra de pesquisa e filtros */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
@@ -227,8 +213,6 @@ const NewReleasesPage = () => {
                   
                   <Separator />
                   
-                  {/* Mais opções de filtro podem ser adicionadas aqui */}
-                  
                   <div className="flex gap-2 pt-4">
                     <Button variant="outline" onClick={clearFilters} className="flex-1">
                       Limpar
@@ -242,7 +226,6 @@ const NewReleasesPage = () => {
             </Sheet>
           </div>
           
-          {/* Filtros ativos */}
           {(filter !== 'all' || searchQuery || activeCategory) && (
             <div className="flex flex-wrap gap-2">
               {filter !== 'all' && (
@@ -293,7 +276,6 @@ const NewReleasesPage = () => {
             </div>
           )}
           
-          {/* Banner de lançamentos em destaque */}
           <div className="bg-gradient-to-r from-primary/20 to-primary/5 rounded-xl p-6 mb-8">
             <div className="flex items-center mb-4">
               <Star className="text-primary mr-2" />
@@ -332,7 +314,6 @@ const NewReleasesPage = () => {
             </div>
           </div>
           
-          {/* Lista de novos lançamentos */}
           <div>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Todos os Lançamentos</h2>
@@ -513,7 +494,6 @@ const NewReleasesPage = () => {
         </TabsContent>
       </Tabs>
       
-      {/* Newsletter para novidades */}
       <div className="mt-16 bg-muted/50 rounded-xl p-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Receba Novidades Primeiro</h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">

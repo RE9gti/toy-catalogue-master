@@ -79,7 +79,7 @@ const EditProductPage: React.FC = () => {
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id || ''),
-    onSettled: (data) => {
+    onSuccess: (data) => {
       if (!data) setNotFound(true);
     },
     onError: () => {
