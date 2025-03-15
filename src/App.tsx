@@ -16,6 +16,7 @@ import NewReleasesPage from './pages/NewReleases';
 import PromotionsPage from './pages/Promotions';
 import ContactPage from './pages/Contact';
 import LoginPage from './pages/Login';
+import SignupPage from './pages/Signup';
 import ProfilePage from './pages/Profile';
 import AddProductPage from './pages/Admin/AddProduct';
 import EditProductPage from './pages/Admin/EditProduct';
@@ -89,6 +90,7 @@ function AppRoutes() {
           <Route path="/promocoes" element={<PromotionsPage />} />
           <Route path="/contato" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/cadastro" element={<SignupPage />} />
           <Route path="/perfil" element={
             <ProtectedClientRoute>
               <ProfilePage />

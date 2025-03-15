@@ -193,9 +193,13 @@ const LoginPage = () => {
         <CardFooter className="flex justify-center border-t pt-4">
           <div className="text-sm text-center">
             Não tem uma conta?{" "}
-            <a href="#" className="text-primary font-medium hover:underline">
+            <Button 
+              variant="link" 
+              className="p-0 h-auto font-medium" 
+              onClick={() => navigate('/cadastro')}
+            >
               Cadastre-se
-            </a>
+            </Button>
           </div>
         </CardFooter>
       </Card>

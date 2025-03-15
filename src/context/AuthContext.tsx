@@ -1,8 +1,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User } from '@/types';
-import { users } from '@/data/mockData';
+import { User, Customer } from '@/types';
+import { users, customers } from '@/data/mockData';
 import { useToast } from '@/hooks/use-toast';
 
 interface AuthContextType {
@@ -12,6 +12,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isAdmin: boolean;
   updateProfile: (userData: Partial<User>) => void;
+  register: (userData: Omit<User, 'id' | 'role' | 'status'>) => Promise<boolean>;
   isLoading: boolean;
   lastActive: Date | null;
 }
@@ -106,6 +107,58 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
   
+  const register = async (userData: Omit<User, 'id' | 'role' | 'status'>): Promise<boolean> => {
+    // Verificar se email já existe
+    const emailExists = users.some(u => u.email === userData.email);
+    
+    if (emailExists) {
+      toast({
+        title: "Erro no cadastro",
+        description: "Este e-mail já está sendo utilizado.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    // Em um ambiente real, isso seria uma chamada à API
+    // Aqui apenas simulamos o cadastro
+    const newUser: User = {
+      id: `${users.length + 1}`,
+      ...userData,
+      role: 'customer',
+      status: 'active',
+      createdAt: new Date().toISOString()
+    };
+    
+    // Adicionar à lista de usuários (simulação)
+    users.push(newUser);
+    
+    // Criar também um cliente associado
+    const newCustomer: Customer = {
+      id: `${customers.length + 1}`,
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+      phone: userData.phone || '',
+      birthDate: new Date().toISOString(),
+      addresses: [],
+      preferences: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      status: 'active'
+    };
+    
+    // Adicionar à lista de clientes (simulação)
+    customers.push(newCustomer);
+    
+    toast({
+      title: "Cadastro realizado com sucesso",
+      description: "Sua conta foi criada. Você já pode fazer login.",
+    });
+    
+    return true;
+  };
+  
   const updateProfile = (userData: Partial<User>) => {
     if (user) {
       const updatedUser = { ...user, ...userData };
@@ -136,6 +189,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isAuthenticated, 
       isAdmin, 
       updateProfile,
+      register,
       isLoading,
       lastActive
     }}>

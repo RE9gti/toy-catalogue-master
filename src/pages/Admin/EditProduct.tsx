@@ -1,186 +1,145 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { toast } from '@/components/ui/use-toast';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product } from '@/types';
+import { products } from '@/data/mockData';
 import ProductForm from '@/components/admin/ProductForm';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { ArrowLeft, Save } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
-const fetchProduct = async (id: string): Promise<Product | null> => {
-  try {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    const mockProduct: Product = {
-      id: id,
-      name: "Produto de Teste",
-      description: "Descrição do produto de teste",
-      price: 99.99,
-      categoryId: "cat-1",
-      image: "",
-      imageUrl: "https://via.placeholder.com/300",
-      stock: 10,
-      sku: "SKU-TEST-123",
-      manufacturer: "Fabricante Teste",
-      supplier: "Fornecedor Teste",
-      dimensions: {
-        height: 10,
-        width: 20,
-        depth: 5
-      },
-      recommendedAge: "3-5 anos",
-      recommendedGender: "Unisex",
-      material: "Plástico",
-      safety: {
-        certifications: ["CE", "INMETRO"],
-        warnings: ["Peças pequenas"]
-      },
-      tags: ["educativo", "divertido"],
-      barcode: "789012345678",
-      weight: 0.5,
-      status: "active"
-    };
-    console.log("Produto recuperado:", mockProduct);
-    return mockProduct;
-  } catch (error) {
-    console.error('Erro ao buscar produto:', error);
-    return null;
+// Simulação de fetch de produto
+const fetchProduct = async (id: string): Promise<Product> => {
+  // Em um ambiente real, isso seria uma chamada à API
+  const product = products.find(p => p.id === id);
+  
+  if (!product) {
+    throw new Error('Produto não encontrado');
   }
+  
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(product), 500);
+  });
 };
 
-const updateProduct = async (product: Partial<Product>): Promise<Product> => {
-  try {
-    console.log("Enviando atualização de produto:", product);
-    const productData = {
-      ...product,
-      imageUrl: product.imageUrl || '',
-      updatedAt: new Date().toISOString()
-    };
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    const mockResponse = {
-      ...productData,
-      updatedAt: new Date().toISOString()
-    };
-    console.log("Produto atualizado:", mockResponse);
-    return mockResponse as Product;
-  } catch (error) {
-    console.error('Erro ao atualizar produto:', error);
-    throw error;
-  }
+// Simulação de atualização de produto
+const updateProduct = async (product: Product): Promise<Product> => {
+  // Em um ambiente real, isso seria uma chamada à API
+  console.log('Atualizando produto:', product);
+  
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(product), 500);
+  });
 };
 
 const EditProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [notFound, setNotFound] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   
-  const { data: product, isLoading } = useQuery({
+  // Estado para controlar o formulário
+  const [formData, setFormData] = useState<Partial<Product>>({});
+  
+  // Buscar dados do produto
+  const { data: product, isLoading, error } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id || ''),
-    onSuccess: (data) => {
-      if (!data) setNotFound(true);
-    },
-    onError: () => {
-      setNotFound(true);
-    }
+    enabled: !!id
   });
   
+  // Após buscar os dados, atualizar o estado do formulário
+  useEffect(() => {
+    if (product) {
+      setFormData(product);
+    }
+  }, [product]);
+  
+  // Mutation para atualizar o produto
   const mutation = useMutation({
     mutationFn: updateProduct,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Invalidar queries para recarregar os dados
+      queryClient.invalidateQueries({ queryKey: ['product', id] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      
       toast({
-        title: 'Produto atualizado com sucesso',
-        description: 'As alterações foram salvas',
+        title: 'Produto atualizado',
+        description: `O produto ${data.name} foi atualizado com sucesso.`,
       });
+      
+      // Redirecionar para a lista de produtos
       navigate('/admin/produtos');
     },
     onError: (error) => {
       toast({
-        title: 'Erro ao atualizar produto',
-        description: `Ocorreu um erro: ${error.message}`,
+        title: 'Erro ao atualizar',
+        description: `Ocorreu um erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`,
         variant: 'destructive',
       });
-      setIsSubmitting(false);
-    },
+    }
   });
-
+  
   const handleSubmit = (productData: Partial<Product>) => {
-    setIsSubmitting(true);
+    if (!id) return;
     
-    if (!productData.imageUrl) {
-      console.log("Produto enviado sem imagem");
-    } else {
-      console.log("Produto enviado com imagem:", 
-        productData.imageUrl.substring(0, 50) + 
-        (productData.imageUrl.length > 50 ? "..." : "")
-      );
-    }
+    const updatedProduct = {
+      ...product,
+      ...productData,
+      id: id
+    } as Product;
     
-    if (product) {
-      const updatedProduct = {
-        ...product,
-        ...productData,
-      };
-      mutation.mutate(updatedProduct);
-    }
+    mutation.mutate(updatedProduct);
   };
-
-  useEffect(() => {
-    if (notFound) {
-      toast({
-        title: 'Produto não encontrado',
-        description: 'O produto solicitado não existe',
-        variant: 'destructive',
-      });
-      navigate('/admin/produtos');
-    }
-  }, [notFound, navigate]);
-
-  if (isLoading) {
-    return (
-      <div className="container mx-auto py-10 px-4">
-        <div className="flex items-center mb-6">
+  
+  return (
+    <div className="container mx-auto p-6">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center space-x-2">
           <Button 
-            variant="ghost" 
-            size="icon" 
+            variant="outline" 
+            size="sm" 
             onClick={() => navigate('/admin/produtos')}
-            className="mr-4"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Voltar
           </Button>
-          <Skeleton className="h-10 w-64" />
+          <h1 className="text-2xl font-bold">Editar Produto</h1>
         </div>
         
-        <div className="space-y-8">
-          <Skeleton className="h-[800px] w-full" />
-        </div>
-      </div>
-    );
-  }
-  
-  if (!product) return null;
-
-  return (
-    <div className="container mx-auto py-10 px-4">
-      <div className="flex items-center mb-6">
         <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => navigate('/admin/produtos')}
-          className="mr-4"
+          onClick={() => handleSubmit(formData)} 
+          disabled={mutation.isPending}
         >
-          <ArrowLeft className="h-5 w-5" />
+          {mutation.isPending ? (
+            <>Salvando...</>
+          ) : (
+            <>
+              <Save className="w-4 h-4 mr-2" />
+              Salvar Alterações
+            </>
+          )}
         </Button>
-        <h1 className="text-3xl font-bold">Editar Produto</h1>
       </div>
       
-      <ProductForm 
-        product={product}
-        onSubmit={handleSubmit}
-        isLoading={isSubmitting || mutation.isPending}
-      />
+      {isLoading && <div className="text-center py-8">Carregando produto...</div>}
+      
+      {error && (
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+          <p className="text-red-700">
+            {error instanceof Error ? error.message : 'Erro ao carregar produto'}
+          </p>
+        </div>
+      )}
+      
+      {product && (
+        <ProductForm 
+          initialData={product} 
+          onChange={setFormData} 
+          onSubmit={handleSubmit} 
+        />
+      )}
     </div>
   );
 };
