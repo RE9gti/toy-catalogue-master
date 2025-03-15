@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, User, KeyRound, LogIn } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,15 +20,16 @@ const LoginPage = () => {
   
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   
   // Verificar se o usuário já está autenticado
   useEffect(() => {
     if (isAuthenticated) {
-      // Redirecionar para área de admin se for admin, senão para home
+      // Redirecionar para área de admin se for admin, senão para perfil
       if (isAdmin) {
         navigate('/admin');
       } else {
-        navigate('/');
+        navigate('/perfil');
       }
     }
   }, [isAuthenticated, isAdmin, navigate]);
@@ -43,7 +45,7 @@ const LoginPage = () => {
     
     // Simulação de delay de rede
     setTimeout(() => {
-      const success = login(formData.email, formData.password);
+      const success = login(formData.email, formData.password, rememberMe);
       
       if (success) {
         toast({
@@ -141,6 +143,20 @@ const LoginPage = () => {
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="remember-me" 
+                checked={rememberMe} 
+                onCheckedChange={(checked) => setRememberMe(checked === true)}
+              />
+              <label
+                htmlFor="remember-me"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Lembrar meus dados
+              </label>
             </div>
             
             <Button type="submit" className="w-full" disabled={isLoading}>

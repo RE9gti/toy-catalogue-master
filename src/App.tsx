@@ -16,6 +16,7 @@ import NewReleasesPage from './pages/NewReleases';
 import PromotionsPage from './pages/Promotions';
 import ContactPage from './pages/Contact';
 import LoginPage from './pages/Login';
+import ProfilePage from './pages/Profile';
 import AddProductPage from './pages/Admin/AddProduct';
 import EditProductPage from './pages/Admin/EditProduct';
 import ProductsListPage from './pages/Admin/ProductsList';
@@ -34,6 +35,17 @@ const ProtectedAdminRoute = ({ children }) => {
   
   if (!isAdmin) {
     return <Navigate to="/" replace />;
+  }
+  
+  return children;
+};
+
+// Componente para rotas de cliente protegidas
+const ProtectedClientRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
   
   return children;
@@ -73,6 +85,11 @@ function AppRoutes() {
           <Route path="/promocoes" element={<PromotionsPage />} />
           <Route path="/contato" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/perfil" element={
+            <ProtectedClientRoute>
+              <ProfilePage />
+            </ProtectedClientRoute>
+          } />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
