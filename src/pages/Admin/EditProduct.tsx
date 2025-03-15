@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -78,9 +79,11 @@ const EditProductPage: React.FC = () => {
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id || ''),
-    onSettled: (data, error) => {
+    onSuccess: (data) => {
       if (!data) setNotFound(true);
-      if (error) setNotFound(true);
+    },
+    onError: () => {
+      setNotFound(true);
     }
   });
   
