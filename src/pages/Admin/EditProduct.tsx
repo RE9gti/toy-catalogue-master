@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -9,16 +8,9 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Função para buscar produto do banco de dados MySQL
 const fetchProduct = async (id: string): Promise<Product | null> => {
   try {
-    // Em um ambiente real, esta seria uma chamada para um endpoint de API
-    // que se conectaria ao MySQL usando as credenciais fornecidas
-    
-    // Simulamos uma resposta para desenvolvimento
     await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Para fins de teste, retorne um produto simulado
     const mockProduct: Product = {
       id: id,
       name: "Produto de Teste",
@@ -48,69 +40,29 @@ const fetchProduct = async (id: string): Promise<Product | null> => {
       weight: 0.5,
       status: "active"
     };
-    
     console.log("Produto recuperado:", mockProduct);
     return mockProduct;
-    
-    /* Código real para produção:
-    const response = await fetch(`/api/produtos/${id}`);
-    
-    if (!response.ok) {
-      throw new Error('Erro ao buscar produto');
-    }
-    
-    const data = await response.json();
-    return data;
-    */
   } catch (error) {
     console.error('Erro ao buscar produto:', error);
     return null;
   }
 };
 
-// Função para atualizar produto no banco de dados MySQL
 const updateProduct = async (product: Partial<Product>): Promise<Product> => {
   try {
     console.log("Enviando atualização de produto:", product);
-    
-    // Garantir que os campos de imagem são processados corretamente
     const productData = {
       ...product,
       imageUrl: product.imageUrl || '',
       updatedAt: new Date().toISOString()
     };
-    
-    // Simulação para desenvolvimento
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Simulamos uma resposta bem-sucedida
     const mockResponse = {
       ...productData,
       updatedAt: new Date().toISOString()
     };
-    
     console.log("Produto atualizado:", mockResponse);
     return mockResponse as Product;
-    
-    /* Código real para produção:
-    const response = await fetch(`/api/produtos/${product.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...product,
-        updatedAt: new Date().toISOString()
-      }),
-    });
-    
-    if (!response.ok) {
-      throw new Error('Erro ao atualizar produto');
-    }
-    
-    const data = await response.json();
-    return data as Product;
-    */
   } catch (error) {
     console.error('Erro ao atualizar produto:', error);
     throw error;
@@ -126,11 +78,9 @@ const EditProductPage: React.FC = () => {
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id || ''),
-    onSuccess: (data) => {
+    onSettled: (data, error) => {
       if (!data) setNotFound(true);
-    },
-    onError: () => {
-      setNotFound(true);
+      if (error) setNotFound(true);
     }
   });
   
@@ -156,7 +106,6 @@ const EditProductPage: React.FC = () => {
   const handleSubmit = (productData: Partial<Product>) => {
     setIsSubmitting(true);
     
-    // Verificar se temos uma imagem válida
     if (!productData.imageUrl) {
       console.log("Produto enviado sem imagem");
     } else {
@@ -175,7 +124,6 @@ const EditProductPage: React.FC = () => {
     }
   };
 
-  // Redirecionar se o produto não foi encontrado
   useEffect(() => {
     if (notFound) {
       toast({
