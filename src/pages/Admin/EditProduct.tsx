@@ -135,9 +135,9 @@ const EditProductPage: React.FC = () => {
       
       {product && (
         <ProductForm 
-          initialData={product} 
-          onChange={setFormData} 
+          product={product} 
           onSubmit={handleSubmit} 
+          isLoading={mutation.isPending}
         />
       )}
     </div>
