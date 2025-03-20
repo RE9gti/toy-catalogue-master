@@ -38,7 +38,7 @@ export const validateImageFile = (
 export const simulateUploadProgress = (
   setProgress: React.Dispatch<React.SetStateAction<number>>,
   onComplete?: () => void
-): number => {
+): NodeJS.Timeout => {
   setProgress(0);
   const interval = setInterval(() => {
     setProgress(prev => {

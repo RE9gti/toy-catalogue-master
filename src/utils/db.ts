@@ -59,7 +59,7 @@ export const productDB = {
     // Simulated database response with realistic toy images
     return new Promise((resolve) => {
       setTimeout(() => {
-        const products = [
+        const products: Product[] = [
           {
             id: 'prod-1',
             name: 'Urso de Pelúcia Grande',
