@@ -29,7 +29,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { updateProfile } = useAuth();
+  const { register } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,22 +45,33 @@ const SignupPage: React.FC = () => {
     }
   });
   
-  const onSubmit = (values: SignupFormValues) => {
+  const onSubmit = async (values: SignupFormValues) => {
     setIsLoading(true);
     
-    // Simulação de cadastro
-    setTimeout(() => {
-      // Adicionar lógica para salvar o novo usuário
-      console.log('Novo usuário:', values);
-      
-      toast({
-        title: "Cadastro realizado com sucesso!",
-        description: "Sua conta foi criada. Agora você pode fazer login.",
+    try {
+      const success = await register({
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        password: values.password,
       });
       
+      if (success) {
+        toast({
+          title: "Cadastro realizado com sucesso!",
+          description: "Sua conta foi criada. Agora você pode fazer login.",
+        });
+        navigate('/login');
+      }
+    } catch (error) {
+      toast({
+        title: "Erro no cadastro",
+        description: "Ocorreu um erro ao criar sua conta. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-      navigate('/login');
-    }, 1500);
+    }
   };
   
   return (

@@ -21,7 +21,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const displayUrl = previewUrl || imageUrl;
   const maxSizeBytes = maxSizeMB * 1024 * 1024;
 
-  // Reset error message when image changes
+  // Reset da mensagem de erro quando a imagem muda
   useEffect(() => {
     if (displayUrl) {
       setErrorMessage(null);
@@ -34,14 +34,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     
     if (!file) return;
     
-    // Validate file
+    // Validar arquivo
     const { isValid, errorMessage } = validateImageFile(file, maxSizeBytes);
     if (!isValid) {
       setErrorMessage(errorMessage);
       return;
     }
     
-    // Simulate upload
+    // Simular upload
     setIsUploading(true);
     const progressInterval = simulateUploadProgress(
       setUploadProgress,
@@ -55,7 +55,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     );
     
     try {
-      // Read file as data URL
+      // Ler arquivo como URL de dados
       const dataUrl = await readFileAsDataURL(file);
       setPreviewUrl(dataUrl);
       onChange(dataUrl);

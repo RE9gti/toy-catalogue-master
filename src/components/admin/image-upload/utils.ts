@@ -5,7 +5,7 @@ export const validateImageFile = (
   file: File,
   maxSizeBytes: number
 ): { isValid: boolean; errorMessage: string | null } => {
-  // Check file type
+  // Verificar tipo de arquivo
   if (!file.type.startsWith('image/')) {
     toast({
       title: 'Formato inválido',
@@ -18,7 +18,7 @@ export const validateImageFile = (
     };
   }
   
-  // Check file size
+  // Verificar tamanho do arquivo
   if (file.size > maxSizeBytes) {
     const maxSizeMB = maxSizeBytes / (1024 * 1024);
     toast({
@@ -54,7 +54,7 @@ export const simulateUploadProgress = (
     });
   }, 200);
 
-  // Ensure interval is cleared after a maximum time
+  // Garantir que o intervalo seja limpo após um tempo máximo
   setTimeout(() => {
     clearInterval(interval);
     setProgress(100);
@@ -75,7 +75,7 @@ export const readFileAsDataURL = (
       resolve(reader.result as string);
     };
     reader.onerror = () => {
-      reject(new Error('Failed to read file'));
+      reject(new Error('Falha ao ler o arquivo'));
     };
     reader.readAsDataURL(file);
   });

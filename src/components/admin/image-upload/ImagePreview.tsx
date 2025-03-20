@@ -18,7 +18,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
       <div className="relative mx-auto max-w-xs">
         <img
           src={imageUrl}
-          alt="Preview"
+          alt="Visualização"
           className="mx-auto max-h-64 object-contain rounded-md"
         />
         <Button
