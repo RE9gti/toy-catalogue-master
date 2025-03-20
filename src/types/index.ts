@@ -1,4 +1,3 @@
-
 // Definição dos tipos para o catálogo de brinquedos
 
 export type Category = {
@@ -183,4 +182,20 @@ export type Promotion = {
   usesCount: number;
   exclusive: boolean; // Se é exclusivo para assinantes
   status: "active" | "inactive";
+};
+
+// MySQL database specific types
+export type MySQLConfig = {
+  host: string;
+  port?: number;
+  user: string;
+  password: string;
+  database: string;
+  ssl?: boolean;
+};
+
+export type DatabaseStatus = {
+  isConnected: boolean;
+  connectedAt: Date | null;
+  error?: string;
 };

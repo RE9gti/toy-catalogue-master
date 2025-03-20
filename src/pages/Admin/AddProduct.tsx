@@ -2,81 +2,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Product } from '@/types';
 import ProductForm from '@/components/admin/ProductForm';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { productDB } from '@/utils/db';
 
-// Função para adicionar produto ao banco de dados MySQL
+// Function to add product to MySQL database
 const addProduct = async (product: Partial<Product>): Promise<Product> => {
   try {
-    console.log("Enviando produto para API:", product);
-    
-    // Verificar se a imagem está em formato base64
-    const isBase64Image = product.imageUrl?.startsWith('data:image');
-    console.log("Imagem em formato base64:", isBase64Image);
-    
-    // Verificar sku para evitar duplicações (na produção, isto seria feito pelo backend)
-    const isDuplicate = false; // Simulação - em produção, verificaria no banco de dados
-    
-    if (isDuplicate) {
-      throw new Error('Produto com SKU já existente');
-    }
-    
-    // Garantir que os campos de imagem são processados corretamente
-    const productData = {
-      ...product,
-      // Garantir que exista uma URL de imagem válida 
-      imageUrl: product.imageUrl || '',
-      // Se estiver usando data URL para a imagem, você pode gerenciar isso aqui
-      createdAt: new Date().toISOString()
-    };
-    
-    // Simulação da API - Em produção, isto conectaria ao MySQL
-    // Com as credenciais: usuário: re9, senha: rg51gti66
-    const mockResponse = {
-      ...productData,
-      id: `prod-${Date.now()}`
-    };
-    
-    // Simulamos um pequeno atraso para simular uma chamada de rede
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Simular resposta bem-sucedida (remover em produção)
-    return mockResponse as Product;
-    
-    /* Código real para produção:
-    const response = await fetch('/api/produtos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(productData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Erro ao adicionar produto ao banco de dados');
-    }
-
-    return await response.json();
-    */
+    return await productDB.create(product);
   } catch (error) {
-    console.error('Erro ao adicionar produto:', error);
+    console.error('Error adding product:', error);
     throw error;
   }
 };
 
-// Função para verificar se um SKU já existe
+// Function to check if SKU exists
 const checkSkuExists = async (sku: string): Promise<boolean> => {
-  // Simulação - em produção, faria uma requisição ao backend
-  console.log("Verificando se SKU existe:", sku);
-  
-  // Simulamos um pequeno atraso
-  await new Promise(resolve => setTimeout(resolve, 300));
-  
-  // Retornamos falso por enquanto
-  return false;
+  try {
+    // In a real implementation, this would query the database
+    console.log("Verificando se SKU existe:", sku);
+    
+    // Simulate a delay
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // For demonstration, always return false
+    return false;
+  } catch (error) {
+    console.error("Error checking SKU:", error);
+    throw error;
+  }
 };
 
 const AddProductPage: React.FC = () => {
@@ -84,6 +41,7 @@ const AddProductPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSkuChecking, setIsSkuChecking] = useState(false);
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   
   const mutation = useMutation({
     mutationFn: addProduct,
@@ -100,7 +58,7 @@ const AddProductPage: React.FC = () => {
     onError: (error) => {
       toast({
         title: 'Erro ao adicionar produto',
-        description: `Ocorreu um erro: ${error.message}`,
+        description: `Ocorreu um erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`,
         variant: 'destructive',
       });
       setIsSubmitting(false);

@@ -3,34 +3,30 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product } from '@/types';
-import { products } from '@/data/mockData';
 import ProductForm from '@/components/admin/ProductForm';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { productDB } from '@/utils/db';
 
-// Simulação de fetch de produto
+// Fetch product from MySQL database
 const fetchProduct = async (id: string): Promise<Product> => {
-  // Em um ambiente real, isso seria uma chamada à API
-  const product = products.find(p => p.id === id);
-  
-  if (!product) {
-    throw new Error('Produto não encontrado');
+  try {
+    return await productDB.getById(id);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    throw error;
   }
-  
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(product), 500);
-  });
 };
 
-// Simulação de atualização de produto
+// Update product in MySQL database
 const updateProduct = async (product: Product): Promise<Product> => {
-  // Em um ambiente real, isso seria uma chamada à API
-  console.log('Atualizando produto:', product);
-  
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(product), 500);
-  });
+  try {
+    return await productDB.update(product.id, product);
+  } catch (error) {
+    console.error('Error updating product:', error);
+    throw error;
+  }
 };
 
 const EditProductPage: React.FC = () => {
