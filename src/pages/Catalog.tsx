@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { categories, products } from '@/data/mockData';
 import { subcategories } from '@/data/subcategoriesMock';
-import { Category, Product, Subcategory } from '@/types';
+import { Category, Product } from '@/types';
+import { Subcategory } from '@/types/product';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Search, Filter, SlidersHorizontal, ChevronDown, X, RefreshCcw } from 'lucide-react';
@@ -37,7 +37,6 @@ const CatalogPage = () => {
   const [ageFilters, setAgeFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
-  // Simular tempo de carregamento
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -45,12 +44,10 @@ const CatalogPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Obter subcategorias filtradas pela categoria ativa
   const filteredSubcategories = subcategories.filter(
     subcategory => !activeCategory || subcategory.categoryId === activeCategory
   );
 
-  // Função para limpar filtros
   const clearFilters = () => {
     setActiveCategory(null);
     setActiveSubcategory(null);
@@ -60,7 +57,6 @@ const CatalogPage = () => {
     setAgeFilters([]);
   };
 
-  // Obter opções de idade a partir dos produtos
   const ageOptions = [
     { id: '0-2', label: '0-2 anos' },
     { id: '3-5', label: '3-5 anos' },
@@ -69,7 +65,6 @@ const CatalogPage = () => {
     { id: '12+', label: '12+ anos' }
   ];
 
-  // Alternar filtro de idade
   const toggleAgeFilter = (ageId: string) => {
     setAgeFilters(
       ageFilters.includes(ageId)
@@ -77,30 +72,16 @@ const CatalogPage = () => {
         : [...ageFilters, ageId]
     );
   };
-  
-  // Filtrar produtos
+
   const filteredProducts = products.filter(product => {
-    // Filtragem por categoria
     if (activeCategory && product.categoryId !== activeCategory) {
       return false;
     }
     
-    // Filtragem por subcategoria (futura implementação)
-    // if (activeSubcategory && product.subcategoryId !== activeSubcategory) {
-    //   return false;
-    // }
-    
-    // Filtragem por preço
     if (product.price < priceRange[0] || product.price > priceRange[1]) {
       return false;
     }
     
-    // Filtragem por idade (futura implementação)
-    // if (ageFilters.length > 0 && !ageFilters.includes(product.ageRange)) {
-    //   return false;
-    // }
-    
-    // Filtragem por termo de busca
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       return (
@@ -113,7 +94,6 @@ const CatalogPage = () => {
     return true;
   });
 
-  // Ordenar produtos
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sortBy) {
       case 'price-asc':
@@ -133,7 +113,6 @@ const CatalogPage = () => {
     <div className="container mx-auto px-4 py-8 animate-fade-in">
       <h1 className="text-3xl font-bold mb-8">Catálogo de Brinquedos</h1>
       
-      {/* Barra de pesquisa e filtros */}
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <div className="relative flex-grow">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
@@ -179,7 +158,6 @@ const CatalogPage = () => {
             </SheetHeader>
             
             <div className="space-y-6">
-              {/* Filtro de preço */}
               <div>
                 <h3 className="font-medium mb-3">Faixa de Preço</h3>
                 <div className="px-2">
@@ -200,7 +178,6 @@ const CatalogPage = () => {
               
               <Separator />
               
-              {/* Filtro de idade */}
               <div>
                 <h3 className="font-medium mb-3">Faixa Etária</h3>
                 <div className="space-y-2">
@@ -221,7 +198,6 @@ const CatalogPage = () => {
               
               <Separator />
               
-              {/* Botões de ação */}
               <div className="flex gap-3">
                 <Button 
                   variant="outline" 
@@ -243,7 +219,6 @@ const CatalogPage = () => {
         </Sheet>
       </div>
       
-      {/* Chip de filtros ativos */}
       {(activeCategory || searchQuery || priceRange[0] > 0 || priceRange[1] < 200 || ageFilters.length > 0) && (
         <div className="flex flex-wrap gap-2 mb-6">
           {activeCategory && (
@@ -296,7 +271,6 @@ const CatalogPage = () => {
         </div>
       )}
       
-      {/* Categorias */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Categorias</h2>
@@ -317,7 +291,6 @@ const CatalogPage = () => {
         </div>
       </div>
       
-      {/* Subcategorias - Mostrar apenas quando uma categoria estiver selecionada */}
       {activeCategory && filteredSubcategories.length > 0 && (
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
@@ -355,7 +328,6 @@ const CatalogPage = () => {
         </div>
       )}
       
-      {/* Produtos */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">

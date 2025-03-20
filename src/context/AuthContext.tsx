@@ -1,7 +1,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Customer } from '@/types';
+import { User } from '@/types';
+import { Customer } from '@/types/user';
 import { users, customers } from '@/data/mockData';
 import { useToast } from '@/hooks/use-toast';
 

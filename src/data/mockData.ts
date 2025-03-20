@@ -1,5 +1,5 @@
-
-import { Product, Category, Order, Customer, User } from '../types';
+import { Product, Category, Order, User } from '../types';
+import { Customer } from '../types/user';
 
 export const categories: Category[] = [
   {
