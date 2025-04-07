@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Search, Heart, Menu } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { Button } from '@/components/ui/button';
 
 interface ActionIconsProps {
   toggleMenu: () => void;
@@ -12,34 +13,40 @@ const ActionIcons = ({ toggleMenu }: ActionIconsProps) => {
   const { items } = useCart();
   
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-2">
       {/* Busca */}
-      <button className="p-1 hover:text-primary transition-colors">
-        <Search size={20} />
-      </button>
+      <Button variant="ghost" size="icon" className="rounded-full">
+        <Search size={18} />
+      </Button>
       
       {/* Lista de desejos */}
-      <Link to="/lista-desejos" className="p-1 hover:text-primary transition-colors">
-        <Heart size={20} />
+      <Link to="/lista-desejos">
+        <Button variant="ghost" size="icon" className="rounded-full">
+          <Heart size={18} />
+        </Button>
       </Link>
 
       {/* Carrinho de compras */}
-      <Link to="/carrinho" className="p-1 hover:text-primary transition-colors relative">
-        <ShoppingCart size={20} />
-        {items.length > 0 && (
-          <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            {items.length}
-          </span>
-        )}
+      <Link to="/carrinho">
+        <Button variant="ghost" size="icon" className="rounded-full relative">
+          <ShoppingCart size={18} />
+          {items.length > 0 && (
+            <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              {items.length}
+            </span>
+          )}
+        </Button>
       </Link>
 
       {/* Menu mobile */}
-      <button 
-        className="md:hidden p-1 hover:text-primary transition-colors" 
+      <Button 
+        className="md:hidden" 
+        variant="ghost" 
+        size="icon"
         onClick={toggleMenu}
       >
-        <Menu size={20} />
-      </button>
+        <Menu size={18} />
+      </Button>
     </div>
   );
 };

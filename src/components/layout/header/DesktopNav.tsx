@@ -6,7 +6,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -14,25 +13,25 @@ import {
 const DesktopNav = () => {
   return (
     <NavigationMenu className="hidden md:flex">
-      <NavigationMenuList>
+      <NavigationMenuList className="space-x-1">
         <NavigationMenuItem>
-          <Link to="/catalogo" className="px-3 py-2 hover:text-primary transition-colors">
+          <Link to="/catalogo" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Catálogo
           </Link>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="px-3 py-2 hover:text-primary transition-colors bg-transparent">
+          <NavigationMenuTrigger className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors bg-transparent">
             Categorias
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-white p-4 rounded-md shadow-md min-w-[600px]">
-            <div className="grid grid-cols-2 gap-3 p-4">
+          <NavigationMenuContent className="bg-white p-4 rounded-lg shadow-lg min-w-[600px] border border-border">
+            <div className="grid grid-cols-2 gap-4 p-4">
               <Link 
                 to="/categorias" 
-                className="flex items-center gap-2 p-2 rounded-md hover:bg-muted transition-colors"
+                className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <ChevronDown className="h-4 w-4 text-primary" />
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <ChevronDown className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <div className="font-medium">Todas as Categorias</div>
@@ -41,10 +40,10 @@ const DesktopNav = () => {
               </Link>
               <Link 
                 to="/lancamentos" 
-                className="flex items-center gap-2 p-2 rounded-md hover:bg-muted transition-colors"
+                className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <ChevronDown className="h-4 w-4 text-primary" />
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <ChevronDown className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <div className="font-medium">Lançamentos</div>
@@ -53,10 +52,10 @@ const DesktopNav = () => {
               </Link>
               <Link 
                 to="/promocoes" 
-                className="flex items-center gap-2 p-2 rounded-md hover:bg-muted transition-colors"
+                className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <ChevronDown className="h-4 w-4 text-primary" />
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <ChevronDown className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <div className="font-medium">Promoções</div>
@@ -65,10 +64,10 @@ const DesktopNav = () => {
               </Link>
               <Link 
                 to="/contato" 
-                className="flex items-center gap-2 p-2 rounded-md hover:bg-muted transition-colors"
+                className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <ChevronDown className="h-4 w-4 text-primary" />
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <ChevronDown className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <div className="font-medium">Contato</div>
@@ -80,19 +79,19 @@ const DesktopNav = () => {
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link to="/lancamentos" className="px-3 py-2 hover:text-primary transition-colors">
+          <Link to="/lancamentos" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Lançamentos
           </Link>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link to="/promocoes" className="px-3 py-2 hover:text-primary transition-colors">
+          <Link to="/promocoes" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Promoções
           </Link>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link to="/contato" className="px-3 py-2 hover:text-primary transition-colors">
+          <Link to="/contato" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Contato
           </Link>
         </NavigationMenuItem>
