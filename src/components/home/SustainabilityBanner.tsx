@@ -9,7 +9,7 @@ const SustainabilityBanner = () => {
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-1/3 shrink-0">
             <img 
-              src="/lovable-uploads/401deb71-3b36-443b-a9d0-7d87f10049dc.png" 
+              src="https://images.unsplash.com/photo-1584661156301-daf6a9cad6c2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
               alt="Sustentabilidade e Brinquedos" 
               className="rounded-lg shadow-md"
             />

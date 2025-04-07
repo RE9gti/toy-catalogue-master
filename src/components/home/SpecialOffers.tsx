@@ -22,8 +22,8 @@ const SpecialOffers = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="/lovable-uploads/d5d33528-29a3-49aa-b3ea-976568c6ccec.png" 
-              alt="Bonecas Barbie" 
+              src="https://images.unsplash.com/photo-1550747545-c896b5f89ff7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+              alt="Bonecas e Brinquedos em Promoção" 
               className="rounded-lg shadow-lg"
             />
           </div>

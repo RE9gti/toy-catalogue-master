@@ -12,7 +12,7 @@ const StoreConcept = () => {
             <h3 className="text-2xl font-bold mb-4 text-primary">Conceito de Economia Financeira</h3>
             <div className="flex items-start gap-4 mb-6">
               <img 
-                src="/lovable-uploads/0de45e0e-4f60-49de-8654-079e0123690d.png" 
+                src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                 alt="Economia Financeira" 
                 className="w-1/3 rounded-lg"
               />
@@ -36,7 +36,7 @@ const StoreConcept = () => {
             <h3 className="text-2xl font-bold mb-4 text-primary">Brinquedos com História</h3>
             <div className="flex items-start gap-4 mb-6">
               <img 
-                src="/lovable-uploads/d18df752-5379-4858-ab85-d4c3facf152a.png" 
+                src="https://images.unsplash.com/photo-1558060370-d644729990a0?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                 alt="Brinquedos de Coleção" 
                 className="w-1/3 rounded-lg"
               />

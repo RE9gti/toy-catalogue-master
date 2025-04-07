@@ -10,14 +10,14 @@ const MainBanner = () => {
       <div className="container mx-auto">
         <div className="relative rounded-2xl overflow-hidden shadow-xl">
           <img 
-            src="/lovable-uploads/6de0da6f-cf12-422f-950e-8806371eca81.png" 
-            alt="MuhlStore - Brinquedos" 
+            src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            alt="BrinquedoKIDS - Brinquedos" 
             className="w-full h-auto object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 md:p-10">
             <div className="max-w-3xl text-white">
               <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-                Bem-vindo à MuhlStore
+                Bem-vindo à BrinquedoKIDS
               </h1>
               <p className="text-xl mb-3 drop-shadow-md">
                 Vendas de brinquedos novos e semi-novos. Conceito de economia financeira e de recursos naturais.
