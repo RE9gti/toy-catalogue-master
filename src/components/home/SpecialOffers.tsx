@@ -1,0 +1,36 @@
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Tag } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+const SpecialOffers = () => {
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="md:w-1/2">
+            <h2 className="text-3xl font-bold mb-4 text-primary">Promoções Especiais</h2>
+            <p className="mb-6 text-gray-700">
+              Na compra de qualquer brinquedo semi-novo, ganhe um desconto especial em sua próxima compra. Incentivamos a cultura da reutilização e valorização de brinquedos.
+            </p>
+            <Button variant="default" asChild>
+              <Link to="/promocoes">
+                Ver Promoções <Tag className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+          <div className="md:w-1/2">
+            <img 
+              src="/lovable-uploads/d5d33528-29a3-49aa-b3ea-976568c6ccec.png" 
+              alt="Bonecas Barbie" 
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SpecialOffers;
