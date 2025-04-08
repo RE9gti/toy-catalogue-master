@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
 import { toast } from '@/components/ui/use-toast';
+import { getImagePath } from '@/utils/imageUtils';
 
 interface ProductCardProps {
   product: Product;
@@ -50,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
           )}
           <img
-            src={product.imageUrl}
+            src={getImagePath(product.imageUrl || product.image, '/placeholder.svg')}
             alt={product.name}
             className={`object-cover w-full h-full transition-transform duration-500 
               ${isHovered ? 'scale-105' : 'scale-100'}

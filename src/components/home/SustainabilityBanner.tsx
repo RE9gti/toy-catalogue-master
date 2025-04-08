@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Leaf, RefreshCw, ShoppingBag } from 'lucide-react';
+import { createImagePath } from '@/utils/imageUtils';
 
 const SustainabilityBanner = () => {
   return (
@@ -9,7 +10,7 @@ const SustainabilityBanner = () => {
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-1/3 shrink-0">
             <img 
-              src="/images/banners/sustainability.jpg" 
+              src={createImagePath('sustainability.jpg', 'banners')}
               alt="Sustentabilidade e Brinquedos" 
               className="rounded-lg shadow-md"
             />

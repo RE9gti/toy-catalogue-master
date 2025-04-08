@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { createImagePath } from '@/utils/imageUtils';
 
 interface Product {
   id: number;
@@ -37,7 +38,7 @@ const NewProducts: React.FC<NewProductsProps> = ({ products }) => {
             >
               <div className="aspect-square relative overflow-hidden">
                 <img 
-                  src={produto.imagem.startsWith('http') ? produto.imagem : `/images/products/${produto.imagem}`} 
+                  src={createImagePath(produto.imagem, 'products')} 
                   alt={produto.nome}
                   className="absolute inset-0 w-full h-full object-contain p-4"
                 />

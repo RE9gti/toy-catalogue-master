@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { createImagePath } from '@/utils/imageUtils';
 
 const MainBanner = () => {
   return (
@@ -10,7 +11,7 @@ const MainBanner = () => {
       <div className="container mx-auto">
         <div className="relative rounded-2xl overflow-hidden shadow-xl">
           <img 
-            src="/images/banners/main-banner.jpg" 
+            src={createImagePath('main-banner.jpg', 'banners')} 
             alt="BrinquedoKIDS - Brinquedos" 
             className="w-full h-auto object-cover"
           />

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { createImagePath } from '@/utils/imageUtils';
 
 interface Category {
   id: number;
@@ -26,7 +27,7 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
             <Card key={categoria.id} className="glass-card overflow-hidden">
               <div className="aspect-square relative">
                 <img 
-                  src={categoria.imagem.startsWith('http') ? categoria.imagem : `/images/categories/${categoria.imagem}`} 
+                  src={createImagePath(categoria.imagem, 'categories')}
                   alt={categoria.nome}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />

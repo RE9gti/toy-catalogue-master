@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { createImagePath } from '@/utils/imageUtils';
 
 const FinalBanner = () => {
   return (
@@ -7,7 +8,7 @@ const FinalBanner = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center text-center">
           <img 
-            src="/images/banners/final-banner.jpg" 
+            src={createImagePath('final-banner.jpg', 'banners')} 
             alt="Brinquedos BrinquedoKIDS" 
             className="w-full max-w-3xl rounded-lg shadow-lg mb-6"
           />

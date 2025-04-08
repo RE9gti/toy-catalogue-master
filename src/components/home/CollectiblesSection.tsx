@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { createImagePath } from '@/utils/imageUtils';
 
 const CollectiblesSection = () => {
   return (
@@ -13,7 +14,7 @@ const CollectiblesSection = () => {
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/20">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <img 
-                src="/images/collections/hot-wheels.png" 
+                src={createImagePath('hot-wheels.png', 'collections')} 
                 alt="Hot Wheels" 
                 className="w-full md:w-1/2 rounded-lg"
               />
@@ -34,7 +35,7 @@ const CollectiblesSection = () => {
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/20">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <img 
-                src="/images/collections/action-figures.png" 
+                src={createImagePath('action-figures.png', 'collections')} 
                 alt="Bonecas e Figuras de Ação" 
                 className="w-full md:w-1/2 rounded-lg"
               />

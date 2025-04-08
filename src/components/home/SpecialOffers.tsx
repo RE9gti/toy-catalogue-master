@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { createImagePath } from '@/utils/imageUtils';
 
 const SpecialOffers = () => {
   return (
@@ -22,7 +23,7 @@ const SpecialOffers = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="/images/banners/special-offers.jpg" 
+              src={createImagePath('special-offers.jpg', 'banners')} 
               alt="Bonecas e Brinquedos em Promoção" 
               className="rounded-lg shadow-lg"
             />

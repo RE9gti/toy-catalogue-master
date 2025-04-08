@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Category } from '@/types';
+import { getImagePath } from '@/utils/imageUtils';
 
 interface CategoryCardProps {
   category: Category;
@@ -13,9 +14,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   // Handle image path to support both local and external images
-  const imagePath = category.imageUrl.startsWith('http') 
-    ? category.imageUrl 
-    : `/images/categories/${category.imageUrl}`;
+  const imagePath = getImagePath(
+    category.imageUrl || category.image, 
+    '/placeholder.svg'
+  );
 
   return (
     <Link 
