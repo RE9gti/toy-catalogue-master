@@ -2,69 +2,101 @@
 export const categoriasPrincipais = [
   {
     id: 1,
-    nome: 'Brinquedos Novos',
-    descricao: 'Lançamentos e produtos originais lacrados',
-    imagem: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+    nome: "Brinquedos Educativos",
+    descricao: "Aprender brincando com nossos brinquedos educativos",
+    imagem: "educativos.jpg"
   },
   {
     id: 2,
-    nome: 'Brinquedos Semi-novos',
-    descricao: 'Grande economia com qualidade garantida',
-    imagem: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+    nome: "Jogos de Tabuleiro",
+    descricao: "Diversão garantida para toda a família",
+    imagem: "tabuleiro.jpg"
   },
   {
     id: 3,
-    nome: 'Colecionáveis',
-    descricao: 'Itens raros e edições especiais',
-    imagem: 'https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+    nome: "Personagens Nintendo",
+    descricao: "Mario, Luigi, Princesa Peach e outros",
+    imagem: "nintendo.jpg"
   },
   {
     id: 4,
-    nome: 'Bonecas e Figuras',
-    descricao: 'Personagens queridos de todas as épocas',
-    imagem: 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+    nome: "Brinquedos Raros",
+    descricao: "Itens de colecionador difíceis de encontrar",
+    imagem: "raros.jpg"
+  },
+  {
+    id: 5,
+    nome: "Bonecas",
+    descricao: "Bonecas modernas e clássicas",
+    imagem: "bonecas.jpg"
+  },
+  {
+    id: 6,
+    nome: "Super-Heróis",
+    descricao: "Figuras de ação dos heróis favoritos",
+    imagem: "herois.jpg"
+  },
+  {
+    id: 7,
+    nome: "Eletrônicos",
+    descricao: "Brinquedos eletrônicos interativos",
+    imagem: "eletronicos.jpg"
+  },
+  {
+    id: 8,
+    nome: "Semi-Novos",
+    descricao: "Economia e sustentabilidade",
+    imagem: "seminovos.jpg"
   }
 ];
 
 export const produtosNovidades = [
   {
-    id: 1,
-    nome: 'Boneca Vintage 1980',
-    categoria: 'Colecionáveis',
-    preco: 349.99,
-    imagem: '/lovable-uploads/d5d33528-29a3-49aa-b3ea-976568c6ccec.png',
-    seminovo: true
-  },
-  {
-    id: 2,
-    nome: 'Hot Wheels - Challenger',
-    categoria: 'Carrinhos',
-    preco: 29.99,
-    imagem: '/lovable-uploads/a89e856b-e973-493f-9b52-68173316ded4.png',
+    id: 101,
+    nome: "Super Mario Odyssey",
+    categoria: "Personagens Nintendo",
+    preco: 89.90,
+    imagem: "mario-odyssey.jpg",
     lancamento: true
   },
   {
-    id: 3,
-    nome: 'Stormtrooper - Star Wars',
-    categoria: 'Figuras de Ação',
-    preco: 199.99,
-    imagem: '/lovable-uploads/de71d392-554d-4021-b798-0405c28068a9.png',
-    seminovo: true
-  },
-  {
-    id: 4,
-    nome: 'Sustentabilidade Kids',
-    categoria: 'Educativo',
-    preco: 89.99,
-    imagem: '/lovable-uploads/401deb71-3b36-443b-a9d0-7d87f10049dc.png',
+    id: 102,
+    nome: "Lego Minecraft",
+    categoria: "Blocos",
+    preco: 129.90,
+    imagem: "lego-minecraft.jpg",
     lancamento: true
   },
   {
-    id: 5,
-    nome: 'Kit Bonecas Irmãs',
-    categoria: 'Bonecas',
-    preco: 129.99,
-    imagem: '/lovable-uploads/0de45e0e-4f60-49de-8654-079e0123690d.png',
+    id: 103,
+    nome: "Hot Wheels Pista Radical",
+    categoria: "Carrinhos",
+    preco: 199.90,
+    imagem: "hot-wheels.jpg",
+    lancamento: true
+  },
+  {
+    id: 104,
+    nome: "Luigi's Mansion",
+    categoria: "Personagens Nintendo",
+    preco: 79.90,
+    imagem: "luigi-mansion.jpg",
+    lancamento: true
+  },
+  {
+    id: 105,
+    nome: "Princesa Peach",
+    categoria: "Bonecas",
+    preco: 59.90,
+    imagem: "princesa-peach.jpg",
+    lancamento: true
+  },
+  {
+    id: 106,
+    nome: "Yoshi de Pelúcia",
+    categoria: "Pelúcia",
+    preco: 45.90,
+    imagem: "yoshi.jpg",
     seminovo: true
   }
 ];

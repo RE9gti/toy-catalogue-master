@@ -12,6 +12,11 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
+  // Handle image path to support both local and external images
+  const imagePath = category.imageUrl.startsWith('http') 
+    ? category.imageUrl 
+    : `/images/categories/${category.imageUrl}`;
+
   return (
     <Link 
       to={`/catalog?category=${category.name.toLowerCase().replace(/ /g, '-')}`}
@@ -28,7 +33,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
             </div>
           )}
           <img
-            src={category.imageUrl}
+            src={imagePath}
             alt={category.name}
             className={`object-cover w-full h-full transition-all duration-700 
               ${isHovered ? 'scale-105 filter brightness-95' : 'scale-100'}

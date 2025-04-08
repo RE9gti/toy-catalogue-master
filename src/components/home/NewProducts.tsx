@@ -37,7 +37,7 @@ const NewProducts: React.FC<NewProductsProps> = ({ products }) => {
             >
               <div className="aspect-square relative overflow-hidden">
                 <img 
-                  src={produto.imagem} 
+                  src={produto.imagem.startsWith('http') ? produto.imagem : `/images/products/${produto.imagem}`} 
                   alt={produto.nome}
                   className="absolute inset-0 w-full h-full object-contain p-4"
                 />

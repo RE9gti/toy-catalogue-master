@@ -7,7 +7,7 @@ const FinalBanner = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center text-center">
           <img 
-            src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            src="/images/banners/final-banner.jpg" 
             alt="Brinquedos BrinquedoKIDS" 
             className="w-full max-w-3xl rounded-lg shadow-lg mb-6"
           />

@@ -13,7 +13,7 @@ const CollectiblesSection = () => {
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/20">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <img 
-                src="/lovable-uploads/a89e856b-e973-493f-9b52-68173316ded4.png" 
+                src="/images/collections/hot-wheels.png" 
                 alt="Hot Wheels" 
                 className="w-full md:w-1/2 rounded-lg"
               />
@@ -34,7 +34,7 @@ const CollectiblesSection = () => {
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/20">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <img 
-                src="/lovable-uploads/de71d392-554d-4021-b798-0405c28068a9.png" 
+                src="/images/collections/action-figures.png" 
                 alt="Bonecas e Figuras de Ação" 
                 className="w-full md:w-1/2 rounded-lg"
               />

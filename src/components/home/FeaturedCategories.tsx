@@ -26,7 +26,7 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
             <Card key={categoria.id} className="glass-card overflow-hidden">
               <div className="aspect-square relative">
                 <img 
-                  src={categoria.imagem} 
+                  src={categoria.imagem.startsWith('http') ? categoria.imagem : `/images/categories/${categoria.imagem}`} 
                   alt={categoria.nome}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
