@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Package, 
@@ -24,6 +24,7 @@ interface AdminLayoutProps {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = "Painel Administrativo" }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useAuth();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -71,7 +72,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = "Painel Adm
                   )}
                   onClick={() => navigate(item.path)}
                 >
-                  <item.icon size={18} className="mr-2" />
+                  <item.icon size={18} className={cn("mr-2", sidebarCollapsed ? "mr-0" : "mr-2")} />
                   {!sidebarCollapsed && <span>{item.label}</span>}
                 </Button>
               </li>
@@ -85,7 +86,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = "Painel Adm
             className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50"
             onClick={handleLogout}
           >
-            <LogOut size={18} className="mr-2" />
+            <LogOut size={18} className={cn("mr-2", sidebarCollapsed ? "mr-0" : "mr-2")} />
             {!sidebarCollapsed && <span>Sair</span>}
           </Button>
         </div>

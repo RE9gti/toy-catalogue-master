@@ -1,153 +1,63 @@
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Index from './pages/Index';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import NotFound from './pages/NotFound';
+import Cart from './pages/Cart';
+import Catalog from './pages/Catalog';
+import Categories from './pages/Categories';
+import NewReleases from './pages/NewReleases';
+import Promotions from './pages/Promotions';
+import Profile from './pages/Profile';
+import Contact from './pages/Contact';
+import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
-import { Toaster } from './components/ui/toaster';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import Index from './pages/Index';
-import NotFound from './pages/NotFound';
-import AdminDashboard from './pages/Admin/Dashboard';
-import CartPage from './pages/Cart';
-import CatalogPage from './pages/Catalog';
-import CategoriesPage from './pages/Categories';
-import NewReleasesPage from './pages/NewReleases';
-import PromotionsPage from './pages/Promotions';
-import ContactPage from './pages/Contact';
-import LoginPage from './pages/Login';
-import SignupPage from './pages/Signup';
-import ProfilePage from './pages/Profile';
-import AddProductPage from './pages/Admin/AddProduct';
-import EditProductPage from './pages/Admin/EditProduct';
-import ProductsListPage from './pages/Admin/ProductsList';
-import CategoriesListPage from './pages/Admin/CategoriesList';
-import CustomersListPage from './pages/Admin/CustomersList';
-import OrdersListPage from './pages/Admin/OrdersList';
-import SettingsPage from './pages/Admin/Settings';
-import { useAuth } from './context/AuthContext';
 
-// Criando cliente de query
-const queryClient = new QueryClient();
-
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-// Componente para rotas protegidas
-const ProtectedAdminRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated, isAdmin } = useAuth();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  if (!isAdmin) {
-    return <Navigate to="/" replace />;
-  }
-  
-  return <>{children}</>;
-};
-
-// Componente para rotas de cliente protegidas
-const ProtectedClientRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  return <>{children}</>;
-};
-
-function AppRoutes() {
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Index />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={
-            <ProtectedAdminRoute>
-              <AdminDashboard />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/produtos" element={
-            <ProtectedAdminRoute>
-              <ProductsListPage />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/produtos/novo" element={
-            <ProtectedAdminRoute>
-              <AddProductPage />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/produtos/editar/:id" element={
-            <ProtectedAdminRoute>
-              <EditProductPage />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/categorias" element={
-            <ProtectedAdminRoute>
-              <CategoriesListPage />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/clientes" element={
-            <ProtectedAdminRoute>
-              <CustomersListPage />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/pedidos" element={
-            <ProtectedAdminRoute>
-              <OrdersListPage />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/configuracoes" element={
-            <ProtectedAdminRoute>
-              <SettingsPage />
-            </ProtectedAdminRoute>
-          } />
-          
-          {/* Public Routes */}
-          <Route path="/carrinho" element={<CartPage />} />
-          <Route path="/catalogo" element={<CatalogPage />} />
-          <Route path="/categorias" element={<CategoriesPage />} />
-          <Route path="/lancamentos" element={<NewReleasesPage />} />
-          <Route path="/promocoes" element={<PromotionsPage />} />
-          <Route path="/contato" element={<ContactPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/cadastro" element={<SignupPage />} />
-          
-          {/* Protected Client Routes */}
-          <Route path="/perfil" element={
-            <ProtectedClientRoute>
-              <ProfilePage />
-            </ProtectedClientRoute>
-          } />
-          
-          {/* 404 Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
-  );
-}
+// Admin Pages
+import Dashboard from './pages/Admin/Dashboard';
+import ProductsList from './pages/Admin/ProductsList';
+import AddProduct from './pages/Admin/AddProduct';
+import EditProduct from './pages/Admin/EditProduct';
+import OrdersList from './pages/Admin/OrdersList';
+import CustomersList from './pages/Admin/CustomersList';
+import CategoriesList from './pages/Admin/CategoriesList';
+import Settings from './pages/Admin/Settings';
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <AuthProvider>
-          <CartProvider>
-            <AppRoutes />
-            <Toaster />
-          </CartProvider>
-        </AuthProvider>
-      </Router>
-    </QueryClientProvider>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/new-releases" element={<NewReleases />} />
+            <Route path="/promotions" element={<Promotions />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/contact" element={<Contact />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/produtos" element={<ProductsList />} />
+            <Route path="/admin/produtos/adicionar" element={<AddProduct />} />
+            <Route path="/admin/produtos/editar/:id" element={<EditProduct />} />
+            <Route path="/admin/pedidos" element={<OrdersList />} />
+            <Route path="/admin/clientes" element={<CustomersList />} />
+            <Route path="/admin/categorias" element={<CategoriesList />} />
+            <Route path="/admin/configuracoes" element={<Settings />} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+        <Toaster />
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
