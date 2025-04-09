@@ -21,6 +21,10 @@ import ProfilePage from './pages/Profile';
 import AddProductPage from './pages/Admin/AddProduct';
 import EditProductPage from './pages/Admin/EditProduct';
 import ProductsListPage from './pages/Admin/ProductsList';
+import CategoriesListPage from './pages/Admin/CategoriesList';
+import CustomersListPage from './pages/Admin/CustomersList';
+import OrdersListPage from './pages/Admin/OrdersList';
+import SettingsPage from './pages/Admin/Settings';
 import { useAuth } from './context/AuthContext';
 
 // Criando cliente de query
@@ -63,14 +67,11 @@ function AppRoutes() {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Index />} />
+          
+          {/* Admin Routes */}
           <Route path="/admin" element={
             <ProtectedAdminRoute>
               <AdminDashboard />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/produtos/novo" element={
-            <ProtectedAdminRoute>
-              <AddProductPage />
             </ProtectedAdminRoute>
           } />
           <Route path="/admin/produtos" element={
@@ -78,11 +79,38 @@ function AppRoutes() {
               <ProductsListPage />
             </ProtectedAdminRoute>
           } />
+          <Route path="/admin/produtos/novo" element={
+            <ProtectedAdminRoute>
+              <AddProductPage />
+            </ProtectedAdminRoute>
+          } />
           <Route path="/admin/produtos/editar/:id" element={
             <ProtectedAdminRoute>
               <EditProductPage />
             </ProtectedAdminRoute>
           } />
+          <Route path="/admin/categorias" element={
+            <ProtectedAdminRoute>
+              <CategoriesListPage />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/clientes" element={
+            <ProtectedAdminRoute>
+              <CustomersListPage />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/pedidos" element={
+            <ProtectedAdminRoute>
+              <OrdersListPage />
+            </ProtectedAdminRoute>
+          } />
+          <Route path="/admin/configuracoes" element={
+            <ProtectedAdminRoute>
+              <SettingsPage />
+            </ProtectedAdminRoute>
+          } />
+          
+          {/* Public Routes */}
           <Route path="/carrinho" element={<CartPage />} />
           <Route path="/catalogo" element={<CatalogPage />} />
           <Route path="/categorias" element={<CategoriesPage />} />
@@ -91,11 +119,15 @@ function AppRoutes() {
           <Route path="/contato" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cadastro" element={<SignupPage />} />
+          
+          {/* Protected Client Routes */}
           <Route path="/perfil" element={
             <ProtectedClientRoute>
               <ProfilePage />
             </ProtectedClientRoute>
           } />
+          
+          {/* 404 Route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
