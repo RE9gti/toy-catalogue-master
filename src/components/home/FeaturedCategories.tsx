@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { createImagePath } from '@/utils/imageUtils';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 interface Category {
   id: number;
@@ -24,12 +24,13 @@ const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categories }) =
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {categories.map((categoria) => (
-            <Card key={categoria.id} className="glass-card overflow-hidden">
+            <Card key={categoria.id} className="glass-card overflow-hidden transform hover:scale-105 transition-all duration-300">
               <div className="aspect-square relative">
-                <img 
-                  src={createImagePath(categoria.imagem, 'categories')}
+                <ImageWithFallback 
+                  src={`/images/categories/${categoria.imagem}`}
                   alt={categoria.nome}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  fallbackSrc={`/lovable-uploads/${Math.floor(Math.random() * 8) + 1}.png`}
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
               <div className="p-4">

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { createImagePath } from '@/utils/imageUtils';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 interface Product {
   id: number;
@@ -30,17 +30,18 @@ const NewProducts: React.FC<NewProductsProps> = ({ products }) => {
           </Link>
         </div>
         
-        <div className="flex overflow-x-auto gap-6 pb-4 snap-x">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
           {products.map((produto) => (
             <div 
               key={produto.id}
-              className="snap-start shrink-0 w-[280px] glass-card"
+              className="glass-card rounded-xl overflow-hidden"
             >
               <div className="aspect-square relative overflow-hidden">
-                <img 
-                  src={createImagePath(produto.imagem, 'products')} 
+                <ImageWithFallback 
+                  src={`/images/products/${produto.imagem}`}
                   alt={produto.nome}
-                  className="absolute inset-0 w-full h-full object-contain p-4"
+                  fallbackSrc="/lovable-uploads/0de45e0e-4f60-49de-8654-079e0123690d.png"
+                  className="absolute inset-0 w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-110"
                 />
                 {produto.lancamento && (
                   <span className="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">
@@ -58,7 +59,7 @@ const NewProducts: React.FC<NewProductsProps> = ({ products }) => {
                 <p className="text-sm text-muted-foreground mb-2">{produto.categoria}</p>
                 <div className="flex justify-between items-center">
                   <span className="font-bold text-lg">R$ {produto.preco.toFixed(2)}</span>
-                  <Button variant="secondary" size="sm">
+                  <Button variant="secondary" size="sm" className="hover:bg-primary hover:text-white transition-colors">
                     <ShoppingBag className="h-4 w-4" />
                   </Button>
                 </div>

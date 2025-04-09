@@ -7,6 +7,7 @@ import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
 import { toast } from '@/components/ui/use-toast';
 import { getImagePath } from '@/utils/imageUtils';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 interface ProductCardProps {
   product: Product;
@@ -42,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="rounded-xl overflow-hidden bg-background border border-border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+      <div className="rounded-xl overflow-hidden bg-background border border-border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
         {/* Product Image */}
         <div className="relative overflow-hidden aspect-square bg-muted/50">
           {!isImageLoaded && (
@@ -50,9 +51,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <div className="loading-spinner" />
             </div>
           )}
-          <img
+          <ImageWithFallback
             src={getImagePath(product.imageUrl || product.image, '/placeholder.svg')}
             alt={product.name}
+            fallbackSrc="/lovable-uploads/0de45e0e-4f60-49de-8654-079e0123690d.png"
             className={`object-cover w-full h-full transition-transform duration-500 
               ${isHovered ? 'scale-105' : 'scale-100'}
               ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}

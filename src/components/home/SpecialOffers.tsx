@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { createImagePath } from '@/utils/imageUtils';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 const SpecialOffers = () => {
   return (
@@ -15,17 +15,18 @@ const SpecialOffers = () => {
             <p className="mb-6 text-gray-700">
               Na compra de qualquer brinquedo semi-novo, ganhe um desconto especial em sua próxima compra. Incentivamos a cultura da reutilização e valorização de brinquedos.
             </p>
-            <Button variant="default" asChild>
-              <Link to="/promocoes">
+            <Button variant="default" className="shadow-md hover:shadow-lg transition-all" asChild>
+              <Link to="/promocoes" className="flex items-center">
                 Ver Promoções <Tag className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
           <div className="md:w-1/2">
-            <img 
-              src={createImagePath('special-offers.jpg', 'banners')} 
+            <ImageWithFallback 
+              src="/images/banners/special-offers.jpg" 
               alt="Bonecas e Brinquedos em Promoção" 
-              className="rounded-lg shadow-lg"
+              fallbackSrc="/lovable-uploads/de71d392-554d-4021-b798-0405c28068a9.png"
+              className="rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300"
             />
           </div>
         </div>
