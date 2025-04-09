@@ -1,33 +1,14 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
-import { Search, MoreHorizontal, Eye, Printer, FileText } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { TablePagination } from '@/components/admin/TablePagination';
+import { Search } from 'lucide-react';
+import { OrdersTable } from '@/components/admin/OrdersTable';
+import { useOrdersTable } from '@/hooks/useOrdersTable';
 
 // Mock orders data
 const orders = [
@@ -74,52 +55,21 @@ const orders = [
 ];
 
 const OrdersList = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-
-  // Filtragem de pedidos com base na pesquisa e filtro de status
-  const filteredOrders = orders.filter(order => {
-    const matchesSearch = order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          order.customer.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
-  // Formatação de data
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(date);
-  };
-
-  // Formatação de moeda
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(value);
-  };
-
-  // Renderização de badges de status
-  const renderStatusBadge = (status: string) => {
-    switch (status) {
-      case 'processing':
-        return <Badge className="bg-blue-500">Processando</Badge>;
-      case 'shipped':
-        return <Badge className="bg-amber-500">Enviado</Badge>;
-      case 'completed':
-        return <Badge className="bg-green-500">Concluído</Badge>;
-      case 'cancelled':
-        return <Badge variant="destructive">Cancelado</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
-  };
+  const {
+    searchTerm,
+    setSearchTerm,
+    statusFilter,
+    setStatusFilter,
+    sortField,
+    sortDirection,
+    handleSort,
+    paginatedOrders,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    formatDate,
+    formatCurrency
+  } = useOrdersTable(orders, { initialSortField: 'date', initialSortDirection: 'desc' });
 
   return (
     <AdminLayout title="Gerenciar Pedidos">
@@ -155,74 +105,20 @@ const OrdersList = () => {
           <CardDescription>Gerencie os pedidos da sua loja.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Cliente</TableHead>
-                <TableHead>Data</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Itens</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredOrders.map(order => (
-                <TableRow key={order.id}>
-                  <TableCell className="font-medium">{order.id}</TableCell>
-                  <TableCell>{order.customer}</TableCell>
-                  <TableCell>{formatDate(order.date)}</TableCell>
-                  <TableCell>{renderStatusBadge(order.status)}</TableCell>
-                  <TableCell>{formatCurrency(order.total)}</TableCell>
-                  <TableCell>{order.items}</TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => console.log('Ver detalhes')}>
-                          <Eye className="mr-2 h-4 w-4" />
-                          Detalhes
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => console.log('Imprimir nota')}>
-                          <Printer className="mr-2 h-4 w-4" />
-                          Imprimir
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => console.log('Gerar nota fiscal')}>
-                          <FileText className="mr-2 h-4 w-4" />
-                          Nota Fiscal
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <OrdersTable
+            orders={paginatedOrders}
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleSort={handleSort}
+            formatDate={formatDate}
+            formatCurrency={formatCurrency}
+          />
           
-          <Pagination className="mt-4">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <TablePagination 
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </CardContent>
       </Card>
     </AdminLayout>
