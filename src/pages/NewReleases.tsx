@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { products } from '@/data/mockData';
 import { Product } from '@/types';
