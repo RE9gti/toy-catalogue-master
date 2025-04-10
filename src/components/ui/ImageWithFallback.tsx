@@ -1,20 +1,22 @@
 
 import React, { useState } from 'react';
+import { cn } from '@/lib/utils';
 
-interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  fallbackSrc?: string;
+interface ImageWithFallbackProps {
+  src: string;
+  alt: string;
+  fallbackSrc: string;
   className?: string;
 }
 
-const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
-  src,
-  fallbackSrc = '/images/placeholder-toy.png',
-  alt,
-  className,
-  ...rest
+const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ 
+  src, 
+  alt, 
+  fallbackSrc, 
+  className 
 }) => {
-  const [imgSrc, setImgSrc] = useState(src);
-  const [hasError, setHasError] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string>(src);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   const handleError = () => {
     if (!hasError) {
@@ -24,12 +26,12 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   };
 
   return (
-    <img 
-      src={imgSrc} 
-      alt={alt} 
+    <img
+      src={imgSrc}
+      alt={alt}
+      className={cn(className)}
       onError={handleError}
-      className={className} 
-      {...rest} 
+      loading="lazy"
     />
   );
 };

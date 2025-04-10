@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Layout from '@/components/layout/Layout';
 import { 
   MainBanner,
   ContactBar,
@@ -16,7 +17,7 @@ import { categoriasPrincipais, produtosNovidades } from '@/data/homeCategories';
 
 const Index = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <Layout>
       <MainBanner />
       <ContactBar />
       <SustainabilityBanner />
@@ -27,7 +28,7 @@ const Index = () => {
       <SpecialOffers />
       <WhyChooseUs />
       <FinalBanner />
-    </div>
+    </Layout>
   );
 };
 
