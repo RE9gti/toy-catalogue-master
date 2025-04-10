@@ -27,9 +27,9 @@ import Settings from './pages/Admin/Settings';
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
+    <Router>
+      <AuthProvider>
+        <CartProvider>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
@@ -54,10 +54,10 @@ function App() {
             
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router>
-        <Toaster />
-      </CartProvider>
-    </AuthProvider>
+          <Toaster />
+        </CartProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
