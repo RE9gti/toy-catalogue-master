@@ -7,13 +7,15 @@ interface ImageWithFallbackProps {
   alt: string;
   fallbackSrc: string;
   className?: string;
+  onLoad?: () => void;
 }
 
 const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ 
   src, 
   alt, 
   fallbackSrc, 
-  className 
+  className,
+  onLoad
 }) => {
   const [imgSrc, setImgSrc] = useState<string>(src);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -25,12 +27,19 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     }
   };
 
+  const handleLoad = () => {
+    if (onLoad) {
+      onLoad();
+    }
+  };
+
   return (
     <img
       src={imgSrc}
       alt={alt}
       className={cn(className)}
       onError={handleError}
+      onLoad={handleLoad}
       loading="lazy"
     />
   );
