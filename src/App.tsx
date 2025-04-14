@@ -45,13 +45,14 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/cadastro" element={<Signup />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/catalog" element={<Catalog />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/new-releases" element={<NewReleases />} />
               <Route path="/promotions" element={<Promotions />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/perfil" element={<Profile />} />
               <Route path="/contact" element={<Contact />} />
               
               {/* Admin Routes */}

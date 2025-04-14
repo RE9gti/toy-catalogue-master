@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, User, KeyRound, LogIn } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { FormInputWithIcon } from './FormInputWithIcon';
+import { useNavigate } from 'react-router-dom';
 
 type LoginFormProps = {
   onSuccess: () => void;
@@ -16,8 +17,9 @@ type LoginFormProps = {
 };
 
 export const LoginForm = ({ onSuccess, initialData }: LoginFormProps) => {
-  const { login } = useAuth();
+  const { login, isAdmin } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     email: initialData?.email || '',
@@ -47,27 +49,44 @@ export const LoginForm = ({ onSuccess, initialData }: LoginFormProps) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulação de delay de rede
-    setTimeout(() => {
-      const success = login(formData.email, formData.password, rememberMe);
-      
-      if (success) {
-        toast({
-          title: "Login realizado com sucesso",
-          description: "Bem-vindo de volta à nossa loja!",
-        });
+    try {
+      // Simulação de delay de rede
+      setTimeout(() => {
+        const success = login(formData.email, formData.password, rememberMe);
         
-        onSuccess();
-      } else {
-        toast({
-          title: "Falha no login",
-          description: "E-mail ou senha incorretos. Tente novamente.",
-          variant: "destructive",
-        });
-      }
-      
+        if (success) {
+          toast({
+            title: "Login realizado com sucesso",
+            description: "Bem-vindo de volta à nossa loja!",
+          });
+          
+          // Redirecionar para a página apropriada
+          if (isAdmin) {
+            navigate('/admin');
+          } else {
+            navigate('/profile');
+          }
+          
+          onSuccess();
+        } else {
+          toast({
+            title: "Falha no login",
+            description: "E-mail ou senha incorretos. Tente novamente.",
+            variant: "destructive",
+          });
+        }
+        
+        setIsLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.error("Erro durante o login:", error);
+      toast({
+        title: "Erro no sistema",
+        description: "Ocorreu um erro ao processar seu login. Tente novamente mais tarde.",
+        variant: "destructive",
+      });
       setIsLoading(false);
-    }, 1500);
+    }
   };
   
   return (

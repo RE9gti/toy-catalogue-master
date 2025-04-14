@@ -40,12 +40,12 @@ const UserMenu = () => {
           </DropdownMenuItem>
         )}
         <DropdownMenuItem>
-          <Link to="/perfil" className="w-full">
+          <Link to="/profile" className="w-full">
             Meu Perfil
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link to="/pedidos" className="w-full">
+          <Link to="/profile" className="w-full">
             Meus Pedidos
           </Link>
         </DropdownMenuItem>
