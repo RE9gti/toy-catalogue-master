@@ -14,6 +14,7 @@ import Contact from './pages/Contact';
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Admin Pages
 import Dashboard from './pages/Admin/Dashboard';
@@ -25,38 +26,50 @@ import CustomersList from './pages/Admin/CustomersList';
 import CategoriesList from './pages/Admin/CategoriesList';
 import Settings from './pages/Admin/Settings';
 
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
+
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <CartProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/catalog" element={<Catalog />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/new-releases" element={<NewReleases />} />
-            <Route path="/promotions" element={<Promotions />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/contact" element={<Contact />} />
-            
-            {/* Admin Routes */}
-            <Route path="/admin" element={<Dashboard />} />
-            <Route path="/admin/produtos" element={<ProductsList />} />
-            <Route path="/admin/produtos/adicionar" element={<AddProduct />} />
-            <Route path="/admin/produtos/editar/:id" element={<EditProduct />} />
-            <Route path="/admin/pedidos" element={<OrdersList />} />
-            <Route path="/admin/clientes" element={<CustomersList />} />
-            <Route path="/admin/categorias" element={<CategoriesList />} />
-            <Route path="/admin/configuracoes" element={<Settings />} />
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-        </CartProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <CartProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/catalog" element={<Catalog />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/new-releases" element={<NewReleases />} />
+              <Route path="/promotions" element={<Promotions />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/contact" element={<Contact />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<Dashboard />} />
+              <Route path="/admin/produtos" element={<ProductsList />} />
+              <Route path="/admin/produtos/adicionar" element={<AddProduct />} />
+              <Route path="/admin/produtos/editar/:id" element={<EditProduct />} />
+              <Route path="/admin/pedidos" element={<OrdersList />} />
+              <Route path="/admin/clientes" element={<CustomersList />} />
+              <Route path="/admin/categorias" element={<CategoriesList />} />
+              <Route path="/admin/configuracoes" element={<Settings />} />
+              
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Toaster />
+          </CartProvider>
+        </AuthProvider>
+      </QueryClientProvider>
     </Router>
   );
 }
