@@ -25,6 +25,7 @@ import OrdersList from './pages/Admin/OrdersList';
 import CustomersList from './pages/Admin/CustomersList';
 import CategoriesList from './pages/Admin/CategoriesList';
 import Settings from './pages/Admin/Settings';
+import DatabaseTools from './pages/Admin/DatabaseTools';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -63,6 +64,7 @@ function App() {
               <Route path="/admin/pedidos" element={<OrdersList />} />
               <Route path="/admin/clientes" element={<CustomersList />} />
               <Route path="/admin/categorias" element={<CategoriesList />} />
+              <Route path="/admin/banco-dados" element={<DatabaseTools />} />
               <Route path="/admin/configuracoes" element={<Settings />} />
               
               <Route path="*" element={<NotFound />} />

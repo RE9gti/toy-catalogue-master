@@ -15,6 +15,27 @@ export type DatabaseStatus = {
   error?: string;
 };
 
+export type BackupConfig = {
+  includeTables?: string[];
+  excludeTables?: string[];
+  compressionLevel?: number;
+  addTimestamp?: boolean;
+};
+
+export type ImportConfig = {
+  replaceExisting?: boolean;
+  skipErrors?: boolean;
+};
+
+export type ExportFormat = 'SQL' | 'CSV' | 'JSON';
+
+export type ExportConfig = {
+  format?: ExportFormat;
+  tables: string[];
+  includeStructure?: boolean;
+  includeData?: boolean;
+};
+
 // Definições de tipos para tabelas principais
 export type DBUser = {
   id: number;

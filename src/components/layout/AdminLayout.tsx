@@ -10,7 +10,8 @@ import {
   Settings, 
   LogOut,
   ChevronLeft,
-  Menu
+  Menu,
+  Database
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
@@ -34,6 +35,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = "Painel Adm
     { icon: Users, label: "Clientes", path: "/admin/clientes" },
     { icon: ShoppingBag, label: "Pedidos", path: "/admin/pedidos" },
     { icon: Tag, label: "Categorias", path: "/admin/categorias" },
+    { icon: Database, label: "Banco de Dados", path: "/admin/banco-dados" },
     { icon: Settings, label: "Configurações", path: "/admin/configuracoes" },
   ];
 
