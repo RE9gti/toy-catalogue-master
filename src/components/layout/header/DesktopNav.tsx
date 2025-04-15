@@ -15,7 +15,7 @@ const DesktopNav = () => {
     <NavigationMenu className="hidden md:flex">
       <NavigationMenuList className="space-x-1">
         <NavigationMenuItem>
-          <Link to="/catalogo" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
+          <Link to="/catalog" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Catálogo
           </Link>
         </NavigationMenuItem>
@@ -27,7 +27,7 @@ const DesktopNav = () => {
           <NavigationMenuContent className="bg-white p-4 rounded-lg shadow-lg min-w-[600px] border border-border">
             <div className="grid grid-cols-2 gap-4 p-4">
               <Link 
-                to="/categorias" 
+                to="/categories" 
                 className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -39,7 +39,7 @@ const DesktopNav = () => {
                 </div>
               </Link>
               <Link 
-                to="/lancamentos" 
+                to="/new-releases" 
                 className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -51,7 +51,7 @@ const DesktopNav = () => {
                 </div>
               </Link>
               <Link 
-                to="/promocoes" 
+                to="/promotions" 
                 className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -63,7 +63,7 @@ const DesktopNav = () => {
                 </div>
               </Link>
               <Link 
-                to="/contato" 
+                to="/contact" 
                 className="flex items-center gap-3 p-3 rounded-md hover:bg-muted transition-colors"
               >
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -79,19 +79,19 @@ const DesktopNav = () => {
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link to="/lancamentos" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
+          <Link to="/new-releases" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Lançamentos
           </Link>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link to="/promocoes" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
+          <Link to="/promotions" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Promoções
           </Link>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link to="/contato" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
+          <Link to="/contact" className="px-3 py-2 text-sm font-medium rounded-md hover:bg-primary/10 transition-colors">
             Contato
           </Link>
         </NavigationMenuItem>
