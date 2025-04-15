@@ -11,7 +11,8 @@ import {
   CollectiblesSection,
   SpecialOffers,
   WhyChooseUs,
-  FinalBanner
+  FinalBanner,
+  FeaturedProducts
 } from '@/components/home';
 import { categoriasPrincipais, produtosNovidades } from '@/data/homeCategories';
 
@@ -20,6 +21,7 @@ const Index = () => {
     <Layout>
       <MainBanner />
       <ContactBar />
+      <FeaturedProducts />
       <SustainabilityBanner />
       <FeaturedCategories categories={categoriasPrincipais} />
       <StoreConcept />

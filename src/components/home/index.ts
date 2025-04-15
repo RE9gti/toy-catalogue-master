@@ -9,3 +9,4 @@ export { default as CollectiblesSection } from './CollectiblesSection';
 export { default as SpecialOffers } from './SpecialOffers';
 export { default as WhyChooseUs } from './WhyChooseUs';
 export { default as FinalBanner } from './FinalBanner';
+export { default as FeaturedProducts } from './FeaturedProducts';

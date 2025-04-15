@@ -3,7 +3,7 @@ import React from 'react';
 import { Product, Category, Subcategory } from '@/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import ProductCard from '@/components/ui/ProductCard';
 
 interface ProductGridProps {
@@ -29,7 +29,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-6 bg-white p-4 rounded-lg shadow-sm">
         <h2 className="text-xl font-semibold">
           {activeCategory
             ? `${categories.find(c => c.id === activeCategory)?.name || 'Produtos'}`
@@ -37,7 +37,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           {activeSubcategory && ` > ${subcategories.find(s => s.id === activeSubcategory)?.name}`}
           {searchQuery && ` - Resultados para "${searchQuery}"`}
         </h2>
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-muted-foreground flex items-center gap-2">
+          <Filter size={16} className="text-primary" />
           {products.length} produtos encontrados
         </div>
       </div>
@@ -56,7 +57,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           ))}
         </div>
       ) : products.length === 0 ? (
-        <Card className="text-center py-12">
+        <Card className="text-center py-12 bg-white/50 backdrop-blur-sm">
           <CardContent>
             <div className="flex flex-col items-center gap-4">
               <Search size={48} className="text-muted-foreground/40" />
@@ -65,7 +66,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                 Não encontramos produtos que correspondam aos seus critérios de busca.
                 Tente termos diferentes ou remova alguns filtros.
               </p>
-              <Button onClick={clearFilters}>
+              <Button onClick={clearFilters} className="mt-2">
                 Limpar filtros
               </Button>
             </div>
@@ -74,7 +75,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <div className="transform transition duration-300 hover:-translate-y-1 hover:shadow-md" key={product.id}>
+              <ProductCard key={product.id} product={product} />
+            </div>
           ))}
         </div>
       )}
