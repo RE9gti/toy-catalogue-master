@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+import Layout from '@/components/layout/Layout';
 import { products } from '@/data/mockData';
-import { Product } from '@/types';
 import { 
   ReleasesHeader,
   SearchAndFilter,
@@ -99,49 +99,51 @@ const NewReleasesPage = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <ReleasesHeader />
-      
-      <SearchAndFilter 
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        filterSheetOpen={filterSheetOpen}
-        setFilterSheetOpen={setFilterSheetOpen}
-        filter={filter}
-        setFilter={setFilter}
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-        clearFilters={clearFilters}
-      />
-      
-      <ReleasesTabs 
-        isLoading={isLoading}
-        filter={filter}
-        setFilter={setFilter}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        priceRange={priceRange}
-        setPriceRange={setPriceRange}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-        filterSheetOpen={filterSheetOpen}
-        setFilterSheetOpen={setFilterSheetOpen}
-        displayCount={displayCount}
-        setDisplayCount={setDisplayCount}
-        allNewReleases={allNewReleases}
-        filteredReleases={filteredReleases}
-        sortedReleases={sortedReleases}
-        featuredProducts={featuredProducts}
-        clearFilters={clearFilters}
-        upcomingReleases={upcomingReleases}
-      />
-      
-      <NewsletterSignup />
-    </div>
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <ReleasesHeader />
+        
+        <SearchAndFilter 
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          filterSheetOpen={filterSheetOpen}
+          setFilterSheetOpen={setFilterSheetOpen}
+          filter={filter}
+          setFilter={setFilter}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          clearFilters={clearFilters}
+        />
+        
+        <ReleasesTabs 
+          isLoading={isLoading}
+          filter={filter}
+          setFilter={setFilter}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          filterSheetOpen={filterSheetOpen}
+          setFilterSheetOpen={setFilterSheetOpen}
+          displayCount={displayCount}
+          setDisplayCount={setDisplayCount}
+          allNewReleases={allNewReleases}
+          filteredReleases={filteredReleases}
+          sortedReleases={sortedReleases}
+          featuredProducts={featuredProducts}
+          clearFilters={clearFilters}
+          upcomingReleases={upcomingReleases}
+        />
+        
+        <NewsletterSignup />
+      </div>
+    </Layout>
   );
 };
 
