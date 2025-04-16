@@ -1,0 +1,43 @@
+
+version: '3.8'
+
+services:
+  mysql:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.mysql
+    container_name: toy_store_mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docs/database-schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: toy_store
+      MYSQL_USER: re9
+      MYSQL_PASSWORD: rg51gti66
+    networks:
+      - toy_store_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: toy_store_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - toy_store_network
+
+networks:
+  toy_store_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

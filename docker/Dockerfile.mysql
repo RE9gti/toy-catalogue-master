@@ -1,0 +1,16 @@
+
+FROM mysql:8.0
+
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=toy_store
+ENV MYSQL_USER=re9
+ENV MYSQL_PASSWORD=rg51gti66
+
+# Copiar o schema para o container
+COPY ../docs/database-schema.sql /docker-entrypoint-initdb.d/
+
+# Configurações adicionais do MySQL (opcional)
+COPY ./mysql/my.cnf /etc/mysql/conf.d/my.cnf
+
+# Aumentar o tempo limite para inicialização do MySQL
+ENV MYSQL_INITDB_SKIP_TZINFO=1
